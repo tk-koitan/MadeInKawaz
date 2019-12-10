@@ -130,7 +130,7 @@ GameObject:
   m_Component:
   - component: {fileID: 24973036}
   - component: {fileID: 24973035}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RenderCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -365,7 +365,7 @@ GameObject:
   - component: {fileID: 286431359}
   - component: {fileID: 286431358}
   - component: {fileID: 286431357}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: DebugText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -521,7 +521,7 @@ GameObject:
   - component: {fileID: 344217528}
   - component: {fileID: 344217527}
   - component: {fileID: 344217526}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -622,7 +622,7 @@ GameObject:
   - component: {fileID: 507244753}
   - component: {fileID: 507244752}
   - component: {fileID: 507244751}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -690,7 +690,7 @@ GameObject:
   - component: {fileID: 536685487}
   - component: {fileID: 536685486}
   - component: {fileID: 536685488}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: DebugManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -772,7 +772,7 @@ GameObject:
   m_Component:
   - component: {fileID: 545611063}
   - component: {fileID: 545611064}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EffectManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -899,7 +899,7 @@ GameObject:
   - component: {fileID: 615484210}
   - component: {fileID: 615484209}
   - component: {fileID: 615484211}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1048,7 +1048,7 @@ GameObject:
   - component: {fileID: 768240512}
   - component: {fileID: 768240514}
   - component: {fileID: 768240513}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Statement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1203,7 +1203,7 @@ GameObject:
   - component: {fileID: 875904694}
   - component: {fileID: 875904696}
   - component: {fileID: 875904695}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: TrasitionImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1354,7 +1354,7 @@ GameObject:
   - component: {fileID: 1006543032}
   - component: {fileID: 1006543031}
   - component: {fileID: 1006543030}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: DebugCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1452,7 +1452,7 @@ GameObject:
   - component: {fileID: 1065330309}
   - component: {fileID: 1065330311}
   - component: {fileID: 1065330310}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: bakudan
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1810,7 +1810,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1301194840}
   - component: {fileID: 1301194841}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TimeManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1860,7 +1860,7 @@ GameObject:
   - component: {fileID: 1339122235}
   - component: {fileID: 1339122237}
   - component: {fileID: 1339122236}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: TimeCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2016,7 +2016,7 @@ GameObject:
   - component: {fileID: 1374308285}
   - component: {fileID: 1374308284}
   - component: {fileID: 1374308283}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2180,7 +2180,7 @@ GameObject:
   - component: {fileID: 1554108156}
   - component: {fileID: 1554108155}
   - component: {fileID: 1554108154}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MusicManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2327,6 +2327,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Kamihubuki
+      objectReference: {fileID: 0}
+    - target: {fileID: 729152047490224588, guid: 0ae76a2d656544e9492d99698896d588,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 729152047490224587, guid: 0ae76a2d656544e9492d99698896d588,
         type: 3}
@@ -2540,7 +2545,7 @@ GameObject:
   - component: {fileID: 1993490307}
   - component: {fileID: 1993490306}
   - component: {fileID: 1993490305}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Main Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2622,7 +2627,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2119652129}
   - component: {fileID: 2119652128}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Directional Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}

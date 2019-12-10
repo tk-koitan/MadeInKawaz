@@ -121,7 +121,7 @@ public class GameManager : MonoBehaviour
                 gameScene = SceneManager.GetSceneByName(sceneName);
                 if (!gameScene.IsValid())
                 {
-                    async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);                    
+                    async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
                     async.allowSceneActivation = false;
                 }
 
@@ -140,8 +140,10 @@ public class GameManager : MonoBehaviour
         TimeCountManager.CountDownStart(4);
         CameraZoomUp();
         Instance.async.allowSceneActivation = true;
+        /*
         gameScene = SceneManager.GetSceneByName(sceneName);
         SceneManager.SetActiveScene(gameScene);
+        */
         Sequence seq = DOTween.Sequence()
             .AppendInterval(4f)
             .OnComplete(() =>
@@ -168,6 +170,19 @@ public class GameManager : MonoBehaviour
             .AppendCallback(() =>
             {
                 SceneManager.UnloadSceneAsync(Instance.sceneName);
+                //シーン削除
+                Scene scene = SceneManager.GetSceneByName("ManagerScene");
+                // 取得したシーンのルートにあるオブジェクトを取得
+                GameObject[] rootObjects = scene.GetRootGameObjects();
+                // 取得したオブジェクトの名前を表示
+                foreach (GameObject obj in rootObjects)
+                {
+                    //Debug.Log(obj.name);
+                    if (obj.layer != 8)
+                    {
+                        Destroy(obj);
+                    }
+                }
                 gameScene = SceneManager.GetSceneByName(sceneName);
                 ClearFlag = false;
                 EffectManager.StopEffect();
@@ -185,8 +200,8 @@ public class GameManager : MonoBehaviour
                 }
                 number++;
                 numberMesh.text = number.ToString();
-            })            
-            .Append(numberMesh.transform.DOScale(0.5f,0.25f).SetRelative())
+            })
+            .Append(numberMesh.transform.DOScale(0.5f, 0.25f).SetRelative())
             .AppendInterval(0.25f)
             .Append(numberMesh.transform.DOScale(-0.5f, 0.25f).SetRelative())
             .AppendCallback(() => ShowStatement())

@@ -24,7 +24,7 @@ namespace TadaGame1
         void Start()
         {
             //DebugBoxManager.Display(this);
-            DebugTextManager.Display(() => { return (transform.position.x.ToString() + ((is_atari_)? "当たり" : "はずれ") + "\n"); });
+            DebugTextManager.Display(() => transform.position.x.ToString() + ((is_atari_) ? "当たり" : "はずれ") + "\n");
             // sprite_ren_ = body.GetComponent<SpriteRenderer>();
             animator_ = body.GetComponent<Animator>();
             hit_box_ = body.GetComponent<BoxCollider2D>();
