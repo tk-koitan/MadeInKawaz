@@ -214,8 +214,8 @@ public class GameManager : MonoBehaviour
         if (!ClearFlag)
         {
             ClearFlag = true;
-            //EffectManager.EmitEffect(EffectCode.Kamihubuki);
-            EffectManager.PlayEffect();
+            EffectManager.EmitEffect(EffectCode.Kamihubuki);
+            //EffectManager.PlayEffect();
         }
     }
 
