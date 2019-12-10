@@ -34,3 +34,6 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+TestPlayPackage.asset
+TestPlayPackage.asset.meta

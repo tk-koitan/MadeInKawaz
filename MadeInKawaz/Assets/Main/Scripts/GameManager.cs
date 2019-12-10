@@ -8,27 +8,34 @@ using UnityEngine.SceneManagement;
 using System.Linq;
 using UnityEngine.UI;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public static bool ClearFlag { get; private set; }
     public static Queue<Action> ClearActionQueue = new Queue<Action>();
     [SerializeField]
-    private TextMeshProUGUI statement;
+    private TextMeshProUGUI statementMesh;
     [SerializeField]
     private string sceneName;
-    [SerializeField]
-    private Camera managerCamera;
-    private Camera gameCamera;
     private AsyncOperation async;
     private Scene gameScene;
     [SerializeField]
     private RawImage transitionImage;
     [SerializeField]
     private RectTransform trasitionMask;
-    private AudioSource audioSource;
     [SerializeField]
-    private GamePackage[] games;    
+    private TextMeshPro numberMesh;
+    public int number { get; private set; }
+    [SerializeField]
+    private GamePackage[] games;
+    private GamePackage currentGame;
+    private GameType currentGameType;
+    private bool isTestPlay = false;
+    public PlayMode mode { get; set; }
     // Start is called before the first frame update
     void Start()
     {
@@ -42,12 +49,27 @@ public class GameManager : MonoBehaviour
             Destroy(this);
         }
 
-        Initialization();
+        mode = PlayMode.None;
 
-        audioSource = GetComponent<AudioSource>();
+#if UNITY_EDITOR
+        isTestPlay = EditorPrefs.GetBool("testPlayFlag", false);
+        if (isTestPlay)
+        {
+            Debug.Log("これはテストプレイです");
+            EditorPrefs.SetBool("testPlayFlag", false);
+            mode = PlayMode.Debug;
+            Time.timeScale = EditorPrefs.GetFloat("timeScale", 1);
+        }
+#endif
+        if (mode != PlayMode.None)
+        {
+            Initialization();
+        }
+
+        statementMesh.gameObject.SetActive(false);
 
         //デバッグ用
-        EndGame();
+        //EndGame();
         DebugTextManager.Display(() => "TimeScale:" + Time.timeScale);
     }
 
@@ -78,24 +100,32 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    [ContextMenu("Initialization")]
     private void Initialization()
     {
-        statement.gameObject.SetActive(false);
+        number = 1;
+        numberMesh.text = number.ToString();
+        if (isTestPlay)
+        {
+            currentGame = LoadGamePackage();
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName("ManagerScene"));
+            SceneManager.UnloadSceneAsync(currentGame.sceneName);
+        }
+
         Sequence seq = DOTween.Sequence()
             .AppendInterval(2f)
             .AppendCallback(() =>
             {
                 //次のシーン読み込み
-                int rand = UnityEngine.Random.Range(0, games.Length);
-                sceneName = games[rand].sceneName;
-                statement.text = games[rand].statement;
+                currentGame = LoadGamePackage();
                 gameScene = SceneManager.GetSceneByName(sceneName);
                 if (!gameScene.IsValid())
                 {
                     async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
                     async.allowSceneActivation = false;
-                    Time.timeScale += 0.1f;
                 }
+
+                ClearActionQueue.Clear();
             })
             .AppendInterval(1.75f)
             .AppendCallback(() => ShowStatement())
@@ -126,24 +156,20 @@ public class GameManager : MonoBehaviour
             {
                 ClearActionQueue.Clear();
                 CameraZoomOut();
-                if(ClearFlag)
+                if (ClearFlag)
                 {
-                    audioSource.pitch = Time.timeScale;
-                    audioSource.Play();
+                    MusicManager.audioSource.pitch = Time.timeScale;
+                    MusicManager.Play(0);
                 }
             })
             .AppendInterval(0.5f)
             .AppendCallback(() =>
             {
                 SceneManager.UnloadSceneAsync(Instance.sceneName);
-                Instance.gameCamera = null;
                 gameScene = SceneManager.GetSceneByName(sceneName);
                 ClearFlag = false;
                 EffectManager.StopEffect();
-                //次のシーン読み込み
-                int rand = UnityEngine.Random.Range(0, games.Length);
-                sceneName = games[rand].sceneName;
-                statement.text = games[rand].statement;
+                currentGame = LoadGamePackage();
             })
             .AppendInterval(1.5f)
             .AppendCallback(() =>
@@ -155,8 +181,12 @@ public class GameManager : MonoBehaviour
                     async.allowSceneActivation = false;
                     Time.timeScale += 0.1f;
                 }
-            })
-            .AppendInterval(1.75f)
+                number++;
+                numberMesh.text = number.ToString();
+            })            
+            .Append(numberMesh.transform.DOScale(0.5f,0.25f).SetRelative())
+            .AppendInterval(0.25f)
+            .Append(numberMesh.transform.DOScale(-0.5f, 0.25f).SetRelative())
             .AppendCallback(() => ShowStatement())
             .AppendInterval(0.25f)
             .AppendCallback(() => StartGame());
@@ -178,7 +208,7 @@ public class GameManager : MonoBehaviour
         Instance.gameCamera.orthographicSize = 100;
         Instance.gameCamera.DOOrthoSize(5, 0.5f);
         Instance.managerCamera.DOOrthoSize(0.1f, 0.5f);
-        */        
+        */
         Sequence seq = DOTween.Sequence()
             .OnStart(() =>
             {
@@ -219,14 +249,45 @@ public class GameManager : MonoBehaviour
 
     public static void ShowStatement()
     {
-        Instance.statement.gameObject.SetActive(true);
-        Instance.statement.transform.localScale = Vector3.one * 10;
+        Instance.statementMesh.gameObject.SetActive(true);
+        Instance.statementMesh.transform.localScale = Vector3.one * 10;
         Sequence seq = DOTween.Sequence()
-            .Append(Instance.statement.transform.DOScale(Vector3.one, 0.25f))
+            .Append(Instance.statementMesh.transform.DOScale(Vector3.one, 0.25f))
             .AppendInterval(1f)
             .OnComplete(() =>
             {
-                Instance.statement.gameObject.SetActive(false);
+                Instance.statementMesh.gameObject.SetActive(false);
             });
+    }
+
+    GamePackage LoadGamePackage()
+    {
+        GamePackage package;
+
+        if (mode == PlayMode.Debug)
+        {
+            var path = "Assets/Main/Games/TestPlayPackage.asset";
+            package = AssetDatabase.LoadAssetAtPath<GamePackage>(path);
+        }
+        else
+        {
+            //次のシーン読み込み
+            int rand = UnityEngine.Random.Range(0, games.Length);
+            package = games[rand];
+        }
+
+        sceneName = package.sceneName;
+        statementMesh.text = package.statement;
+        currentGameType = package.gameType;
+
+        return package;
+    }
+
+    public enum PlayMode
+    {
+        Normal,
+        Single,
+        Debug,
+        None
     }
 }

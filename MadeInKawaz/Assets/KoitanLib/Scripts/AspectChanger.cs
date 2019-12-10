@@ -8,7 +8,7 @@ public class AspectChanger : MonoBehaviour
     void Start()
     {
         //強制的にアスペクト比を16:9にする
-        Screen.SetResolution(Screen.width, Screen.width * 9 / 16, Screen.fullScreen);
+        //Screen.SetResolution(Screen.width, Screen.width * 9 / 16, Screen.fullScreen);
 
         DebugTextManager.Display(() => { return "Resolution: " + Screen.width + "×" + Screen.height + "\n"; },-1);
         //DebugTextManager.Display(() => { return "FullScreen: " + Screen.fullScreen.ToString() + "\n"; }, -1);

@@ -17,7 +17,7 @@ public class TimeCountManager : MonoBehaviour
     private Image bombImg;
     [SerializeField]
     private Sprite[] bombSprs;
-    private int count;
+    public float time;
 
     // Start is called before the first frame update
     void Start()
@@ -59,11 +59,13 @@ public class TimeCountManager : MonoBehaviour
             }
         }
         */
+        time += Time.deltaTime;
     }
 
     public static void CountDownStart(float time)
     {
         RemainingTime = time;
+        time = 0;
         IsRunning = true;        
         Instance.textMesh.text = string.Empty;
         Sequence seq = DOTween.Sequence()

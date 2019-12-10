@@ -25,6 +25,16 @@ public class DebugTextManager : MonoBehaviour
             debugCanvas.SetActive(!debugCanvas.activeSelf);
         }
 
+        if(Input.GetKey(KeyCode.W))
+        {
+            debugText.fontSize += 1;
+        }
+
+        if (Input.GetKey(KeyCode.S))
+        {
+            debugText.fontSize -= 1;
+        }
+
         //debugText.text = str();
         if (Debug.isDebugBuild)
         {
