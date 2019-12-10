@@ -108,7 +108,7 @@ public class GameManager : MonoBehaviour
         if (isTestPlay)
         {
             currentGame = LoadGamePackage();
-            SceneManager.SetActiveScene(SceneManager.GetSceneByName("ManagerScene"));
+            //SceneManager.SetActiveScene(SceneManager.GetSceneByName("ManagerScene"));
             SceneManager.UnloadSceneAsync(currentGame.sceneName);
         }
 
@@ -121,7 +121,7 @@ public class GameManager : MonoBehaviour
                 gameScene = SceneManager.GetSceneByName(sceneName);
                 if (!gameScene.IsValid())
                 {
-                    async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+                    async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);                    
                     async.allowSceneActivation = false;
                 }
 
@@ -140,6 +140,8 @@ public class GameManager : MonoBehaviour
         TimeCountManager.CountDownStart(4);
         CameraZoomUp();
         Instance.async.allowSceneActivation = true;
+        gameScene = SceneManager.GetSceneByName(sceneName);
+        SceneManager.SetActiveScene(gameScene);
         Sequence seq = DOTween.Sequence()
             .AppendInterval(4f)
             .OnComplete(() =>

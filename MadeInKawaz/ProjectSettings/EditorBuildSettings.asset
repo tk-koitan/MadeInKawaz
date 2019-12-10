@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/SampleGame/Scenes/SampleGame.unity
     guid: 1fbd8adeb374745cda331bcc444738e4
+  - enabled: 1
+    path: Assets/Tada/Game2/Scenes/TadaGame2.unity
+    guid: e1a668e2c1762644bbe7db2c490c08dd
+  - enabled: 1
+    path: Assets/Tada/Game1/Scene/TadaGame1.unity
+    guid: cdd76bd0225c26941a0f053f7c3d90cb
   m_configObjects: {}
