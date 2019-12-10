@@ -25,7 +25,7 @@ public class EffectManager : MonoBehaviour
             Destroy(this);
         }
 
-        StopEffect();
+        //StopEffect();
     }
 
     // Update is called once per frame

@@ -185,8 +185,9 @@ public class GameManager : MonoBehaviour
                 }
                 gameScene = SceneManager.GetSceneByName(sceneName);
                 ClearFlag = false;
-                EffectManager.StopEffect();
+                //EffectManager.StopEffect();
                 currentGame = LoadGamePackage();
+                Debug.Log(currentGame.name);
             })
             .AppendInterval(1.5f)
             .AppendCallback(() =>
