@@ -16,7 +16,7 @@ public class DebugPopupManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        DebugTextManager.Display(() => "PopupQueueCount:" + popupQueue.Count.ToString() + "\n", -100);
+        //DebugTextManager.Display(() => "PopupQueueCount:" + popupQueue.Count.ToString() + "\n", -100);
         popup = textPopupBox.GetComponent<DebugPopup>();
     }
 

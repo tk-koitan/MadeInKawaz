@@ -38,8 +38,10 @@ namespace SampleGame
                 velocity = 0;
                 GetComponent<SpriteRenderer>().sprite = spr;
                 transform.Translate(0, -2, 0);
-            }
-                );
+            });
+
+            //デバッグ用
+            //DebugBoxManager.Display(this).SetSize(200, 200);
         }
 
         // Update is called once per frame
@@ -63,6 +65,11 @@ namespace SampleGame
                 transform.Translate(0, -2, 0);
             }
             */
+        }
+
+        public override string ToString()
+        {
+            return velocity.ToString();
         }
     }
 }

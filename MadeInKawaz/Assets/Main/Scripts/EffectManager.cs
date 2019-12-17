@@ -9,9 +9,6 @@ public class EffectManager : MonoBehaviour
     [SerializeField]
     GameObject[] effects;
 
-    [SerializeField]
-    ParticleSystem eff;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -42,16 +39,6 @@ public class EffectManager : MonoBehaviour
     public static GameObject EmitEffect(EffectCode code, Vector3 pos)
     {
         return Instantiate(Instance.effects[(int)code], pos, Quaternion.identity);
-    }
-
-    public static void PlayEffect()
-    {
-        Instance.eff.Play();
-    }
-
-    public static void StopEffect()
-    {
-        Instance.eff.Stop();        
     }
 }
 
