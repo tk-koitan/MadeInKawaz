@@ -8,7 +8,7 @@ public class CatScript : MonoBehaviour
     private Vector3 startPosition;
     private Vector3 target;
     [SerializeField]
-    private float timeToReachTarget = 5f;
+    private float timeToReachTarget = 6f;
     void Start()
     {
         startPosition = transform.position;

@@ -34,7 +34,7 @@ public class MouseScript : MonoBehaviour
         }
         if (!isFinished)
         {
-            if (transform.position.x < -6 || cat.position.x < -4.5f)
+            if (transform.position.x < -6 || cat.position.x < -4)
             {
                 transform.parent = cat;
                 isFinished = true;
