@@ -21,7 +21,7 @@ public class DebugNotificationGenerator : MonoBehaviour
     void Start()
     {
         textMesh = textBox.GetComponentInChildren<TextMeshProUGUI>();
-        DebugTextManager.Display(() => "NotificationQueueCount:" + nQueue.Count.ToString() + "\n");
+        //DebugTextManager.Display(() => "NotificationQueueCount:" + nQueue.Count.ToString() + "\n");
     }
 
     // Update is called once per frame

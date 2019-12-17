@@ -10,13 +10,14 @@ public class DebugBox : ButtonBase
 {
     private OpenState openState = OpenState.Closed;
     public Transform parent { get; private set; }
-    public Vector2 size { get; }
+    public Vector2 size { get; private set; } = new Vector2(600, 400);
     public Func<string> message { get; private set; }
     private TextMeshProUGUI text;
     private Image image;
     private bool isAlwaysOpen = false;
     private Vector3 offset;
     Sequence seq = DOTween.Sequence();
+    private GameObject parentObj;
 
     public DebugBox(Func<string> m, Transform t)
     {
@@ -24,18 +25,50 @@ public class DebugBox : ButtonBase
         parent = t;
     }
 
-    public void SetBox(Func<string> m, Transform t)
+    public DebugBox SetBox(Func<string> m, Transform t)
     {
         message = m;
         parent = t;
+        text = GetComponentInChildren<TextMeshProUGUI>();        
+        return this;
+    }    
+
+    public DebugBox SetSize(Vector2 s)
+    {
+        size = s;        
+        return this;
+    }
+
+    public DebugBox SetSize(float width, float height)
+    {
+        return SetSize(new Vector2(width, height));
+    }
+
+    public DebugBox SetOffset(Vector2 o)
+    {
+        offset = o;
+        return this;
+    }
+
+    public DebugBox SetAlignment(TextAlignmentOptions o)
+    {
+        text.alignment = o;
+        return this;
+    }
+
+    public DebugBox SetDefaultOpen()
+    {        
+        return this;
     }
 
     protected override void Start()
     {
         base.Start();
-        offset = new Vector3(0, -100);
+        parentObj = parent.gameObject;        
+        //offset = new Vector3(0, -100);
         rectTransform.sizeDelta = new Vector2(100, 100);
         text = GetComponentInChildren<TextMeshProUGUI>();
+        text.rectTransform.sizeDelta = size;
         image = GetComponent<Image>();
         text.gameObject.SetActive(false);
         onTouchEnter = () =>
@@ -45,8 +78,8 @@ public class DebugBox : ButtonBase
                 seq.Kill();
                 openState = OpenState.Opening;
                 seq = DOTween.Sequence()
-                .Append(rectTransform.DOSizeDelta(new Vector2(600, 400), 0.2f))
-                .Join(DOTween.To(() => offset, (t) => offset = t, new Vector3(0, -250), 0.2f))
+                .Append(rectTransform.DOSizeDelta(size, 0.2f))
+                //.Join(DOTween.To(() => offset, (t) => offset = t, new Vector3(0, -250), 0.2f))
                 .OnComplete(() =>
                 {
                     text.gameObject.SetActive(true);
@@ -64,7 +97,7 @@ public class DebugBox : ButtonBase
                 openState = OpenState.Closing;
                 seq = DOTween.Sequence()
                 .Append(rectTransform.DOSizeDelta(new Vector2(100, 100), 0.2f))
-                .Join(DOTween.To(() => offset, (t) => offset = t, new Vector3(0, -100), 0.2f))
+                //.Join(DOTween.To(() => offset, (t) => offset = t, new Vector3(0, -100), 0.2f))
                 .OnComplete(() =>
                 {
                     openState = OpenState.Closed;
@@ -89,9 +122,14 @@ public class DebugBox : ButtonBase
     protected override void Update()
     {
         base.Update();
+        if (parent == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
         Vector3 pos = Camera.main.WorldToScreenPoint(parent.position);
         transform.position = pos;
-        rectTransform.transform.localPosition += offset;
+        //rectTransform.transform.localPosition += offset;
         if (openState == OpenState.Opened)
         {
             text.text = message();

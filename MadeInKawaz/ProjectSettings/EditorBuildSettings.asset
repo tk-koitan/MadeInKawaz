@@ -6,11 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Main/Scenes/ManagerScene.unity
-    guid: 266aceaa3cdef4be0a5a909ae9f5233c
-  - enabled: 1
     path: Assets/Main/Scenes/Title.unity
     guid: 636e2f9794d5c47f1a32a88911ca0494
+  - enabled: 1
+    path: Assets/Main/Scenes/ManagerScene.unity
+    guid: 266aceaa3cdef4be0a5a909ae9f5233c
   - enabled: 1
     path: Assets/SampleGame/Scenes/SampleGame.unity
     guid: 1fbd8adeb374745cda331bcc444738e4
@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Tada/Game1/Scene/TadaGame1.unity
     guid: cdd76bd0225c26941a0f053f7c3d90cb
+  - enabled: 1
+    path: Assets/Koitan/G/Scenes/G.unity
+    guid: 5f8edea60110445a88e26f8c6a4dddaf
   m_configObjects: {}

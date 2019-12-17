@@ -17,19 +17,7 @@ public class MadeInKawaz : EditorWindow
     {
         GetWindow<MadeInKawaz>();
 
-        // 設定を保存(読み込み)するパス ScriptableObjectは.assetを付けないと正しく読んでくれません
-        var path = "Assets/Main/Games/TestPlayPackage.asset";
-        setting = AssetDatabase.LoadAssetAtPath<GamePackage>(path);
-
-        if (setting == null)
-        { // ロードしてnullだったら存在しないので生成
-            setting = ScriptableObject.CreateInstance<GamePackage>(); // ScriptableObjectはnewではなくCreateInstanceを使います
-            AssetDatabase.CreateAsset(setting, path);
-        }
-
-        string[] strs = EditorSceneManager.GetActiveScene().path.Split('/');
-
-        setting.sceneName = strs[strs.Length - 1].Replace(".unity", string.Empty);
+        LoadSetting();
 
         timeScale = EditorPrefs.GetFloat("timeScale", 1);
     }
@@ -64,7 +52,25 @@ public class MadeInKawaz : EditorWindow
     [MenuItem("MadeInKawaz/TestPlay")]
     private static void TestPlay()
     {
+        LoadSetting();
         EditorPrefs.SetBool("testPlayFlag", true);
         EditorApplication.isPlaying = true;                
+    }
+
+    private static void LoadSetting()
+    {
+        // 設定を保存(読み込み)するパス ScriptableObjectは.assetを付けないと正しく読んでくれません
+        var path = "Assets/Main/Games/TestPlayPackage.asset";
+        setting = AssetDatabase.LoadAssetAtPath<GamePackage>(path);
+
+        if (setting == null)
+        { // ロードしてnullだったら存在しないので生成
+            setting = ScriptableObject.CreateInstance<GamePackage>(); // ScriptableObjectはnewではなくCreateInstanceを使います
+            AssetDatabase.CreateAsset(setting, path);
+        }
+
+        string[] strs = EditorSceneManager.GetActiveScene().path.Split('/');
+
+        setting.sceneName = strs[strs.Length - 1].Replace(".unity", string.Empty);
     }
 }
