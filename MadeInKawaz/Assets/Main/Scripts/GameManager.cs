@@ -35,7 +35,16 @@ public class GameManager : MonoBehaviour
     private GamePackage currentGame;
     private GameType currentGameType;
     private bool isTestPlay = false;
-    public PlayMode mode { get; set; }
+    public static PlayMode mode { get; set; } = PlayMode.None;
+    [SerializeField]
+    private Animator backgrondAnim;
+    [SerializeField]
+    private Animator[] coinAnims;
+    private int restNum;
+    private bool FinishFlag;
+    public static bool IsGamePlaying { get; private set; }
+    private static Queue<int> gameQueue = new Queue<int>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,18 +58,38 @@ public class GameManager : MonoBehaviour
             Destroy(this);
         }
 
-        mode = PlayMode.None;
 
 #if UNITY_EDITOR
         isTestPlay = EditorPrefs.GetBool("testPlayFlag", false);
         if (isTestPlay)
         {
-            Debug.Log("これはテストプレイです");
+            Debug.Log("これはテストプレイです😀");
             EditorPrefs.SetBool("testPlayFlag", false);
             mode = PlayMode.Debug;
             Time.timeScale = EditorPrefs.GetFloat("timeScale", 1);
+            //Initialization();
         }
 #endif
+
+        //Debug.Log(SceneManager.GetActiveScene().buildIndex);
+
+        /*
+        if (mode != PlayMode.None)
+        {
+            Initialization();
+        }
+        */
+
+        //やばい実装、後で直す
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            mode = PlayMode.Normal;
+        }
+        else
+        {
+            IsGamePlaying = true;
+        }
+
         if (mode != PlayMode.None)
         {
             Initialization();
@@ -101,10 +130,13 @@ public class GameManager : MonoBehaviour
     }
 
     [ContextMenu("Initialization")]
-    private void Initialization()
+    public void Initialization()
     {
+        Time.timeScale = 1;
         number = 1;
+        restNum = 4;
         numberMesh.text = number.ToString();
+        numberMesh.gameObject.SetActive(false);
         if (isTestPlay)
         {
             currentGame = LoadGamePackage();
@@ -113,9 +145,35 @@ public class GameManager : MonoBehaviour
         }
 
         Sequence seq = DOTween.Sequence()
-            .AppendInterval(2f)
+            .OnStart(() =>
+            {
+                FinishFlag = false;
+                backgrondAnim.Play("Start", 0, 0);
+                for (int i = 0; i < restNum; i++)
+                {
+                    coinAnims[i].gameObject.SetActive(true);
+                    coinAnims[i].Play("CoinStart", 0, 0);
+                    coinAnims[i].speed = 0;
+                }
+            })
+            .AppendInterval(1f)
             .AppendCallback(() =>
             {
+                for (int i = 0; i < restNum; i++)
+                {
+                    coinAnims[i].speed = 1;
+                }
+            })
+            .AppendInterval(1f)
+            .AppendCallback(() =>
+            {
+                backgrondAnim.Play("Ready");
+                foreach (Animator anim in coinAnims)
+                {
+                    anim.Play("CoinReady");
+                }
+                numberMesh.gameObject.SetActive(true);
+
                 //次のシーン読み込み
                 currentGame = LoadGamePackage();
                 gameScene = SceneManager.GetSceneByName(sceneName);
@@ -127,24 +185,38 @@ public class GameManager : MonoBehaviour
 
                 ClearActionQueue.Clear();
             })
-            .AppendInterval(1.75f)
-            .AppendCallback(() => ShowStatement())
-            .AppendInterval(0.25f)
             .AppendCallback(() => StartGame());
     }
 
     [ContextMenu("StartGame")]
     private void StartGame()
     {
-        //ShowStatement();
-        TimeCountManager.CountDownStart(4);
-        CameraZoomUp();
-        Instance.async.allowSceneActivation = true;
+        //ShowStatement();        
         /*
         gameScene = SceneManager.GetSceneByName(sceneName);
         SceneManager.SetActiveScene(gameScene);
         */
         Sequence seq = DOTween.Sequence()
+            .OnStart(() =>
+            {
+                /*
+                number++;
+                numberMesh.text = number.ToString();
+                */
+            })
+            .Append(numberMesh.transform.DOScale(0.5f, 0.25f).SetRelative())
+            .AppendInterval(0.25f)
+            .Append(numberMesh.transform.DOScale(-0.5f, 0.25f).SetRelative())
+            .AppendInterval(1f)
+            .AppendCallback(() => ShowStatement())
+            .AppendInterval(0.25f)
+            .AppendCallback(() =>
+            {
+                TimeCountManager.CountDownStart(4);
+                CameraZoomUp();
+                Instance.async.allowSceneActivation = true;
+                IsGamePlaying = true;
+            })
             .AppendInterval(4f)
             .OnComplete(() =>
             {
@@ -160,10 +232,34 @@ public class GameManager : MonoBehaviour
             {
                 ClearActionQueue.Clear();
                 CameraZoomOut();
+                IsGamePlaying = false;
                 if (ClearFlag)
                 {
                     MusicManager.audioSource.pitch = Time.timeScale;
                     MusicManager.Play(0);
+                    backgrondAnim.Play("Clear");
+                    for (int i = 0; i < restNum; i++)
+                    {
+                        coinAnims[i].Play("CoinClear");
+                    }
+                }
+                else
+                {
+                    backgrondAnim.Play("Failure");
+                    /*
+                    for (int i = 0; i < restNum; i++)
+                    {
+                        coinAnims[i].Play("CoinClear");
+                    }
+                    foreach (Animator anim in coinAnims)
+                    {
+                        if (anim.gameObject.activeSelf)
+                        {
+                            anim.Play("CoinFailure");
+                        }
+                    }
+                    */
+                    coinAnims[restNum - 1].Play("CoinFailure");
                 }
             })
             .AppendInterval(0.5f)
@@ -174,7 +270,6 @@ public class GameManager : MonoBehaviour
                 Scene scene = SceneManager.GetSceneByName("ManagerScene");
                 // 取得したシーンのルートにあるオブジェクトを取得
                 GameObject[] rootObjects = scene.GetRootGameObjects();
-                // 取得したオブジェクトの名前を表示
                 foreach (GameObject obj in rootObjects)
                 {
                     //Debug.Log(obj.name);
@@ -184,7 +279,6 @@ public class GameManager : MonoBehaviour
                     }
                 }
                 gameScene = SceneManager.GetSceneByName(sceneName);
-                ClearFlag = false;
                 //EffectManager.StopEffect();
                 currentGame = LoadGamePackage();
                 Debug.Log(currentGame.name);
@@ -192,27 +286,65 @@ public class GameManager : MonoBehaviour
             .AppendInterval(1.5f)
             .AppendCallback(() =>
             {
-                gameScene = SceneManager.GetSceneByName(sceneName);
-                if (!gameScene.IsValid())
+                //失敗処理
+                if (!ClearFlag)
                 {
-                    async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-                    async.allowSceneActivation = false;
-                    Time.timeScale += 0.1f;
+                    coinAnims[restNum - 1].gameObject.SetActive(false);
+                    restNum--;
+                    if (restNum == 0)
+                    {
+                        FinishFlag = true;
+                    }
                 }
-                number++;
-                numberMesh.text = number.ToString();
+                ClearFlag = false;
+                foreach (Animator anim in coinAnims)
+                {
+                    if (anim.gameObject.activeSelf)
+                    {
+                        anim.Play("CoinReady");
+                    }
+                }
+
+                if (FinishFlag)
+                {
+                    Finish();
+                }
+                else
+                {
+                    gameScene = SceneManager.GetSceneByName(sceneName);
+                    if (!gameScene.IsValid())
+                    {
+                        async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+                        async.allowSceneActivation = false;
+                        Time.timeScale += 0.1f;
+                    }
+
+                    backgrondAnim.Play("Ready");
+                    number++;
+                    numberMesh.text = number.ToString();
+                    StartGame();
+                }
+            });
+    }
+
+    private void Finish()
+    {
+        Sequence seq = DOTween.Sequence()
+            .OnStart(() =>
+            {
+                backgrondAnim.Play("Finish");
             })
-            .Append(numberMesh.transform.DOScale(0.5f, 0.25f).SetRelative())
-            .AppendInterval(0.25f)
-            .Append(numberMesh.transform.DOScale(-0.5f, 0.25f).SetRelative())
-            .AppendCallback(() => ShowStatement())
-            .AppendInterval(0.25f)
-            .AppendCallback(() => StartGame());
+            .AppendInterval(2f)
+            .AppendCallback(() =>
+            {
+                //Initialization();
+                SceneManager.LoadSceneAsync("Title", LoadSceneMode.Additive);
+            });
     }
 
     public static void Clear()
     {
-        if (!ClearFlag)
+        if (!ClearFlag && IsGamePlaying)
         {
             ClearFlag = true;
             EffectManager.EmitEffect(EffectCode.Kamihubuki);
@@ -284,14 +416,32 @@ public class GameManager : MonoBehaviour
 
         if (mode == PlayMode.Debug)
         {
+#if UNITY_EDITOR
             var path = "Assets/Main/Games/TestPlayPackage.asset";
             package = AssetDatabase.LoadAssetAtPath<GamePackage>(path);
+#else
+            int rand = UnityEngine.Random.Range(0, games.Length);
+            package = games[rand];
+#endif
         }
         else
         {
             //次のシーン読み込み
-            int rand = UnityEngine.Random.Range(0, games.Length);
-            package = games[rand];
+            if(gameQueue.Count==0)
+            {
+                List<int> indexList = new List<int>();
+                for (int i = 0; i < games.Length; i++)
+                {
+                    indexList.Add(i);
+                }
+                for (int i = 0; i < games.Length; i++)
+                {
+                    int rand = UnityEngine.Random.Range(0, indexList.Count);
+                    gameQueue.Enqueue(indexList[rand]);
+                    indexList.RemoveAt(rand);
+                }
+            }            
+            package = games[gameQueue.Dequeue()];
         }
 
         sceneName = package.sceneName;

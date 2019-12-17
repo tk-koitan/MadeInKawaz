@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fdb1034ebb819460397b1bf6f8150383, type: 3}
-  m_Name: Sample2
+  m_Name: G
   m_EditorClassIdentifier: 
-  sceneName: Title
-  titleName: "\u30B5\u30C3\u30AB\u30FC"
+  sceneName: G
+  titleName: "G\u6BBA\u3057"
   authorName: koitan
   developerName: Kawaz
-  statement: "\u30BF\u30A4\u30C8\u30EB"
+  statement: "\u3053\u308D\u305B\uFF01"
   explanation: 
   gameType: 0
   iconImage: {fileID: 2800000, guid: 365d9f776307647aea794eaa3fbce8d3, type: 3}

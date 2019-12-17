@@ -23,8 +23,9 @@ namespace TadaGame1
         // Start is called before the first frame update
         void Start()
         {
-            //DebugBoxManager.Display(this);
-            DebugTextManager.Display(() => transform.position.x.ToString() + ((is_atari_) ? "当たり" : "はずれ") + "\n");
+            //本ビルドと区別がないので今は無効
+            //DebugBoxManager.Display(this).SetSize(200, 200).SetAlignment(TMPro.TextAlignmentOptions.Center);
+            DebugTextManager.Display(() => transform.position.x.ToString() + ((is_atari_) ? "当たり" : "はずれ") + "\n").AddRemoveTrigger(this);
             // sprite_ren_ = body.GetComponent<SpriteRenderer>();
             animator_ = body.GetComponent<Animator>();
             hit_box_ = body.GetComponent<BoxCollider2D>();

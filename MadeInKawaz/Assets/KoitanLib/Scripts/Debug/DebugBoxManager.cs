@@ -33,10 +33,11 @@ public class DebugBoxManager : MonoBehaviour
     {
     }
 
-    public static void Display(MonoBehaviour mono)
+    public static DebugBox Display(MonoBehaviour mono)
     {
+        mainCamera = Camera.main;
         Vector3 pos = mainCamera.WorldToScreenPoint(mono.transform.position);
         GameObject boxObj = Instantiate(textBoxPrefab, pos, Quaternion.identity, debugCanvas);
-        boxObj.GetComponent<DebugBox>().SetBox(mono.ToString, mono.transform);
+        return boxObj.GetComponent<DebugBox>().SetBox(mono.ToString, mono.transform);
     }
 }

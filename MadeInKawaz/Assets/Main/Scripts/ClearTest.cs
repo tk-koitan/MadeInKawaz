@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ClearTest : MonoBehaviour
 {
@@ -19,5 +20,12 @@ public class ClearTest : MonoBehaviour
     public void Clear()
     {
         GameManager.Clear();
+    }
+
+    public void GameStart()
+    {
+        GameManager.mode = GameManager.PlayMode.Normal;
+        GameManager.Instance.Initialization();
+        SceneManager.UnloadSceneAsync("Title");        
     }
 }
