@@ -25,7 +25,7 @@ public class MouseScript : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !isFinished)
         {
-            transform.position += new Vector3(-1, 0, 0);
+            transform.position += new Vector3(-2, 0, 0);
             spriteVersion++;
             if (spriteVersion > 3)
                 spriteVersion = 0;
