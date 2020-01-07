@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public static bool ClearFlag { get; private set; }
     public static Queue<Action> ClearActionQueue = new Queue<Action>();
+    public static float timeScale = 1;
     [SerializeField]
     private TextMeshProUGUI statementMesh;
     [SerializeField]
@@ -31,11 +32,12 @@ public class GameManager : MonoBehaviour
     private TextMeshPro numberMesh;
     public int number { get; private set; }
     [SerializeField]
-    private GamePackage[] games;
+    private GamePackageSet gamePackageSet;
     private GamePackage currentGame;
     private GameType currentGameType;
     private bool isTestPlay = false;
     public static PlayMode mode { get; set; } = PlayMode.None;
+    public GamePackage singleGame;
     [SerializeField]
     private Animator backgrondAnim;
     [SerializeField]
@@ -66,6 +68,8 @@ public class GameManager : MonoBehaviour
             Debug.Log("これはテストプレイです😀");
             EditorPrefs.SetBool("testPlayFlag", false);
             mode = PlayMode.Debug;
+            var path = "Assets/Main/Games/TestPlayPackage.asset";
+            singleGame = AssetDatabase.LoadAssetAtPath<GamePackage>(path);
             Time.timeScale = EditorPrefs.GetFloat("timeScale", 1);
             //Initialization();
         }
@@ -107,7 +111,16 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            StartGame();
+            //StartGame();
+            if (Time.timeScale > 0)
+            {
+                timeScale = Time.timeScale;
+                Time.timeScale = 0;                
+            }
+            else
+            {
+                Time.timeScale = timeScale;                
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -137,6 +150,7 @@ public class GameManager : MonoBehaviour
         restNum = 4;
         numberMesh.text = number.ToString();
         numberMesh.gameObject.SetActive(false);
+        gameQueue.Clear();
         if (isTestPlay)
         {
             currentGame = LoadGamePackage();
@@ -332,9 +346,10 @@ public class GameManager : MonoBehaviour
         Sequence seq = DOTween.Sequence()
             .OnStart(() =>
             {
+                Time.timeScale = 1;
                 backgrondAnim.Play("Finish");
             })
-            .AppendInterval(2f)
+            .AppendInterval(1f)
             .AppendCallback(() =>
             {
                 //Initialization();
@@ -390,7 +405,7 @@ public class GameManager : MonoBehaviour
                 Instance.trasitionMask.transform.DOScale(1, 0.5f).SetEase(Ease.OutQuad);
                 Instance.transitionImage.transform.DOScale(1, 0.5f).SetEase(Ease.OutQuad);
             })
-            .AppendInterval(0.5f)
+            .AppendInterval(0.6f)//少し遅らせる
             .AppendCallback(() =>
             {
                 Instance.trasitionMask.gameObject.SetActive(false);
@@ -414,34 +429,34 @@ public class GameManager : MonoBehaviour
     {
         GamePackage package;
 
-        if (mode == PlayMode.Debug)
+        switch (mode)
         {
-#if UNITY_EDITOR
-            var path = "Assets/Main/Games/TestPlayPackage.asset";
-            package = AssetDatabase.LoadAssetAtPath<GamePackage>(path);
-#else
-            int rand = UnityEngine.Random.Range(0, games.Length);
-            package = games[rand];
-#endif
-        }
-        else
-        {
-            //次のシーン読み込み
-            if(gameQueue.Count==0)
-            {
-                List<int> indexList = new List<int>();
-                for (int i = 0; i < games.Length; i++)
+            case PlayMode.Normal:
+                //次のシーン読み込み
+                if (gameQueue.Count == 0)
                 {
-                    indexList.Add(i);
+                    int[] indexList = new int[gamePackageSet.games.Length];
+                    for (int i = 0; i < gamePackageSet.games.Length; i++)
+                    {
+                        indexList[i] = i;
+                    }
+                    for (int i = 0; i < gamePackageSet.games.Length; i++)
+                    {
+                        int rand = UnityEngine.Random.Range(i, indexList.Length);
+                        int tmp = indexList[rand];
+                        indexList[rand] = indexList[i];
+                        indexList[i] = tmp;
+                    }
+                    for (int i = 0; i < gamePackageSet.games.Length; i++)
+                    {
+                        gameQueue.Enqueue(indexList[i]);
+                    }
                 }
-                for (int i = 0; i < games.Length; i++)
-                {
-                    int rand = UnityEngine.Random.Range(0, indexList.Count);
-                    gameQueue.Enqueue(indexList[rand]);
-                    indexList.RemoveAt(rand);
-                }
-            }            
-            package = games[gameQueue.Dequeue()];
+                package = gamePackageSet.games[gameQueue.Dequeue()];
+                break;
+            default:
+                package = singleGame;
+                break;
         }
 
         sceneName = package.sceneName;

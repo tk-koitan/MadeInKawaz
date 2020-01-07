@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: TadaGame1
   m_EditorClassIdentifier: 
   sceneName: TadaGame1
-  titleName: "\u30B5\u30C3\u30AB\u30FC"
+  titleName: "\u30B7\u30EB\u30A8\u30C3\u30C8\u3055\u304C\u3057"
   authorName: tada
   developerName: Kawaz
   statement: "\u3055\u304C\u305B\uFF01"
-  explanation: 
+  explanation: "\u30B7\u30EB\u30A8\u30C3\u30C8\u3068\u540C\u3058\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u3092\u3055\u304C\u305B\uFF01"
   gameType: 0
-  iconImage: {fileID: 2800000, guid: 365d9f776307647aea794eaa3fbce8d3, type: 3}
-  screenshotImage: {fileID: 0}
+  iconImage: {fileID: 21300000, guid: a5a5a7db9cbec30408f6d8f5c3de171a, type: 3}
+  screenshotImage: {fileID: 21300000, guid: 7517a62f38abd404695580e491662470, type: 3}

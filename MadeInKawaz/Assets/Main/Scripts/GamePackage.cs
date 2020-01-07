@@ -11,8 +11,8 @@ public class GamePackage : ScriptableObject
     [Multiline(3)]
     public string explanation;
     public GameType gameType;
-    public Texture2D iconImage;
-    public Texture2D screenshotImage;    
+    public Sprite iconImage;
+    public Sprite screenshotImage;    
 }
 
 public enum GameType

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TitleMenuUI : MonoBehaviour
 {
@@ -23,5 +24,18 @@ public class TitleMenuUI : MonoBehaviour
     public void MoveXUI(float x)
     {
         rectTransform.DOLocalMoveX(x, 0.5f).SetEase(Ease.OutCubic);
+    }
+
+    public void GameStart()
+    {
+        GameManager.mode = GameManager.PlayMode.Normal;
+        GameManager.Instance.Initialization();
+        SceneManager.UnloadSceneAsync("Title");
+    }
+
+    public void LibraryStart()
+    {
+        SceneManager.LoadSceneAsync("Library", LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync("Title");
     }
 }

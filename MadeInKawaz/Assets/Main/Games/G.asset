@@ -17,7 +17,7 @@ MonoBehaviour:
   authorName: koitan
   developerName: Kawaz
   statement: "\u3053\u308D\u305B\uFF01"
-  explanation: 
+  explanation: "\u9ED2\u5149\u308A\u3059\u308BG\u3060\uFF01\n\u898B\u3064\u3051\u6B21\u7B2C\u6BBA\u305B\uFF01"
   gameType: 0
-  iconImage: {fileID: 2800000, guid: 365d9f776307647aea794eaa3fbce8d3, type: 3}
-  screenshotImage: {fileID: 0}
+  iconImage: {fileID: 21300000, guid: 638892e3052314fb2b8dbba402f389fa, type: 3}
+  screenshotImage: {fileID: 21300000, guid: 7517a62f38abd404695580e491662470, type: 3}

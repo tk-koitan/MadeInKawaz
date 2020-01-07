@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: NinGame1
   m_EditorClassIdentifier: 
   sceneName: NinGame1
-  titleName: 
+  titleName: "\u306D\u305A\u307F\u3068\u306D\u3053"
   authorName: nin
   developerName: Kawaz
   statement: "\u3044\u304D\u308D\uFF01"
-  explanation: 
+  explanation: "\u8D70\u3063\u3066\u8D70\u3063\u3066\u8D70\u308A\u307E\u304F\u308C\uFF01"
   gameType: 0
-  iconImage: {fileID: 0}
-  screenshotImage: {fileID: 0}
+  iconImage: {fileID: 21300000, guid: 682d10b0756e62846919a4c2949402d0, type: 3}
+  screenshotImage: {fileID: 21300000, guid: 7517a62f38abd404695580e491662470, type: 3}
