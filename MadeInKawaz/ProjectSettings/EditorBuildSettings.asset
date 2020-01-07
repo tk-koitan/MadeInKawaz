@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Main/Scenes/Library.unity
     guid: f4f02f184010241978e9a8b3a179e03f
+  - enabled: 1
+    path: Assets/Koitan/yoke/Scenes/yoke.unity
+    guid: 24dc7bbbffb624bf987742908e06e3ab
   m_configObjects: {}
