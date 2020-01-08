@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
             Destroy(this);
         }
 
+        Time.timeScale = 1;
 
 #if UNITY_EDITOR
         isTestPlay = EditorPrefs.GetBool("testPlayFlag", false);
@@ -104,7 +105,7 @@ public class GameManager : MonoBehaviour
             Initialization();
         }
 
-        statementMesh.gameObject.SetActive(false);
+        statementMesh.gameObject.SetActive(false);        
 
         //デバッグ用
         //EndGame();

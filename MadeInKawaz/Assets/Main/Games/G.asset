@@ -20,4 +20,4 @@ MonoBehaviour:
   explanation: "\u9ED2\u5149\u308A\u3059\u308BG\u3060\uFF01\n\u898B\u3064\u3051\u6B21\u7B2C\u6BBA\u305B\uFF01"
   gameType: 0
   iconImage: {fileID: 21300000, guid: 638892e3052314fb2b8dbba402f389fa, type: 3}
-  screenshotImage: {fileID: 21300000, guid: 7517a62f38abd404695580e491662470, type: 3}
+  screenshotImage: {fileID: 21300000, guid: 7ba828d32f66145b798081f235af6d12, type: 3}
