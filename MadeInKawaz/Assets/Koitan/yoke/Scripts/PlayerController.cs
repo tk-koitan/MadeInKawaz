@@ -25,7 +25,7 @@ namespace yoke
         void Update()
         {
             timer += Time.deltaTime;
-            if(timer >= 3.7f)
+            if(timer >= 7.7f)//長い設定
             {
                 GameManager.Clear();
             }

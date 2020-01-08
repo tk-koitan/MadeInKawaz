@@ -36,12 +36,16 @@ public class GameManager : MonoBehaviour
     private GamePackage currentGame;
     private GameType currentGameType;
     private bool isTestPlay = false;
+    private bool isPause;
+    private bool isCanPause;
     public static PlayMode mode { get; set; } = PlayMode.None;
     public GamePackage singleGame;
     [SerializeField]
     private Animator backgrondAnim;
     [SerializeField]
     private Animator[] coinAnims;
+    [SerializeField]
+    private GameObject pauseUi;
     private int restNum;
     private bool FinishFlag;
     public static bool IsGamePlaying { get; private set; }
@@ -91,7 +95,8 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            IsGamePlaying = true;
+            //IsGamePlaying = true;
+            //mode = PlayMode.None;
         }
 
         if (mode != PlayMode.None)
@@ -103,24 +108,19 @@ public class GameManager : MonoBehaviour
 
         //デバッグ用
         //EndGame();
-        DebugTextManager.Display(() => "TimeScale:" + Time.timeScale);
+        DebugTextManager.Display(() => "TimeScale:" + Time.timeScale + "\n");
+        //DebugTextManager.Display(() => "progress:" + async.progress + "\n");
+        //DebugTextManager.Display(() => "IsGamePlaying:" + IsGamePlaying.ToString() + "\n");
+        DebugTextManager.Display(() => "mode:" + mode.ToString() + "\n");
+        DebugTextManager.Display(() => "gameType:" + currentGameType.ToString() + "\n");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetMouseButtonDown(0) && isCanPause && !isPause && mode != PlayMode.None)
         {
-            //StartGame();
-            if (Time.timeScale > 0)
-            {
-                timeScale = Time.timeScale;
-                Time.timeScale = 0;                
-            }
-            else
-            {
-                Time.timeScale = timeScale;                
-            }
+            Pause();
         }
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -151,12 +151,14 @@ public class GameManager : MonoBehaviour
         numberMesh.text = number.ToString();
         numberMesh.gameObject.SetActive(false);
         gameQueue.Clear();
+        ClearFlag = false;
         if (isTestPlay)
         {
             currentGame = LoadGamePackage();
-            //SceneManager.SetActiveScene(SceneManager.GetSceneByName("ManagerScene"));
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName("ManagerScene"));
             SceneManager.UnloadSceneAsync(currentGame.sceneName);
         }
+        currentGame = LoadGamePackage();
 
         Sequence seq = DOTween.Sequence()
             .OnStart(() =>
@@ -188,6 +190,7 @@ public class GameManager : MonoBehaviour
                 }
                 numberMesh.gameObject.SetActive(true);
 
+                /*
                 //次のシーン読み込み
                 currentGame = LoadGamePackage();
                 gameScene = SceneManager.GetSceneByName(sceneName);
@@ -196,8 +199,10 @@ public class GameManager : MonoBehaviour
                     async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
                     async.allowSceneActivation = false;
                 }
+                */
 
                 ClearActionQueue.Clear();
+                isCanPause = true;
             })
             .AppendCallback(() => StartGame());
     }
@@ -210,6 +215,17 @@ public class GameManager : MonoBehaviour
         gameScene = SceneManager.GetSceneByName(sceneName);
         SceneManager.SetActiveScene(gameScene);
         */
+        //ゲームの時間を決める
+        float waitTime = 4f;
+        if (currentGameType == GameType.Short)
+        {
+            waitTime = 4f;
+        }
+        else if (currentGameType == GameType.Long)
+        {
+            waitTime = 8f;
+        }
+
         Sequence seq = DOTween.Sequence()
             .OnStart(() =>
             {
@@ -222,16 +238,27 @@ public class GameManager : MonoBehaviour
             .AppendInterval(0.25f)
             .Append(numberMesh.transform.DOScale(-0.5f, 0.25f).SetRelative())
             .AppendInterval(1f)
-            .AppendCallback(() => ShowStatement())
-            .AppendInterval(0.25f)
             .AppendCallback(() =>
             {
-                TimeCountManager.CountDownStart(4);
+                ShowStatement();
+                isCanPause = false;
+                //シーンを非同期で読み込み
+                gameScene = SceneManager.GetSceneByName(sceneName);
+                if (!gameScene.IsValid())
+                {
+                    async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+                    async.allowSceneActivation = false;                    
+                }
+            })
+            .AppendInterval(0.25f)
+            .AppendCallback(() =>
+            {                
+                TimeCountManager.CountDownStart(waitTime);
                 CameraZoomUp();
                 Instance.async.allowSceneActivation = true;
-                IsGamePlaying = true;
+                IsGamePlaying = true;                
             })
-            .AppendInterval(4f)
+            .AppendInterval(waitTime)
             .OnComplete(() =>
             {
                 EndGame();
@@ -287,6 +314,7 @@ public class GameManager : MonoBehaviour
                 foreach (GameObject obj in rootObjects)
                 {
                     //Debug.Log(obj.name);
+                    //レイヤーがManagerSceneでないオブジェクトを削除
                     if (obj.layer != 8)
                     {
                         Destroy(obj);
@@ -295,7 +323,8 @@ public class GameManager : MonoBehaviour
                 gameScene = SceneManager.GetSceneByName(sceneName);
                 //EffectManager.StopEffect();
                 currentGame = LoadGamePackage();
-                Debug.Log(currentGame.name);
+                isCanPause = true;
+                //Debug.Log(currentGame.name);
             })
             .AppendInterval(1.5f)
             .AppendCallback(() =>
@@ -324,24 +353,17 @@ public class GameManager : MonoBehaviour
                     Finish();
                 }
                 else
-                {
-                    gameScene = SceneManager.GetSceneByName(sceneName);
-                    if (!gameScene.IsValid())
-                    {
-                        async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-                        async.allowSceneActivation = false;
-                        Time.timeScale += 0.1f;
-                    }
-
+                {                    
                     backgrondAnim.Play("Ready");
                     number++;
                     numberMesh.text = number.ToString();
+                    Time.timeScale += 0.1f;
                     StartGame();
                 }
             });
     }
 
-    private void Finish()
+    public void Finish()
     {
         Sequence seq = DOTween.Sequence()
             .OnStart(() =>
@@ -464,6 +486,32 @@ public class GameManager : MonoBehaviour
         currentGameType = package.gameType;
 
         return package;
+    }
+
+    public void Pause()
+    {
+        isPause = true;
+        timeScale = Time.timeScale;
+        Time.timeScale = 0;
+        pauseUi.SetActive(true);
+    }
+
+    public void Resume()
+    {
+        isPause = false;
+        Time.timeScale = timeScale;
+        pauseUi.SetActive(false);
+    }
+
+    public void ReturnTitle()
+    {
+        Time.timeScale = 1;
+        isCanPause = false;
+        isPause = false;
+        pauseUi.SetActive(false);
+        DOTween.KillAll();//やばそうな実装
+        mode = PlayMode.None;
+        SceneManager.LoadSceneAsync("Title", LoadSceneMode.Additive);
     }
 
     public enum PlayMode

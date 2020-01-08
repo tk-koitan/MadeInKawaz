@@ -69,7 +69,7 @@ public class TimeCountManager : MonoBehaviour
         IsRunning = true;        
         Instance.textMesh.text = string.Empty;
         Sequence seq = DOTween.Sequence()
-            .AppendInterval(2f)
+            .AppendInterval(RemainingTime - 2f)
             .AppendCallback(() =>
             {
                 Instance.bombImg.gameObject.SetActive(true);
