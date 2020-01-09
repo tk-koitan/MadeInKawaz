@@ -18,6 +18,8 @@ public class TimeCountManager : MonoBehaviour
     [SerializeField]
     private Sprite[] bombSprs;
     public float time;
+    [SerializeField]
+    private Image timeMeterImg;
 
     // Start is called before the first frame update
     void Start()
@@ -60,14 +62,25 @@ public class TimeCountManager : MonoBehaviour
         }
         */
         time += Time.deltaTime;
+        if (RemainingTime > 0)
+        {
+            RemainingTime -= Time.deltaTime;
+            if(RemainingTime < 0)
+            {
+                RemainingTime = 0;
+            }
+        }
+
+        timeMeterImg.rectTransform.sizeDelta = new Vector2(1024 * RemainingTime / 8, 32);
     }
 
     public static void CountDownStart(float time)
     {
         RemainingTime = time;
         time = 0;
-        IsRunning = true;        
+        IsRunning = true;
         Instance.textMesh.text = string.Empty;
+        Instance.timeMeterImg.rectTransform.sizeDelta = new Vector2(1024 * RemainingTime / 8, 32);
         Sequence seq = DOTween.Sequence()
             .AppendInterval(RemainingTime - 2f)
             .AppendCallback(() =>

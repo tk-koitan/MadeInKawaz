@@ -153,6 +153,7 @@ public class GameManager : MonoBehaviour
         numberMesh.gameObject.SetActive(false);
         gameQueue.Clear();
         ClearFlag = false;
+        numberMesh.transform.localScale = Vector3.one;
         if (isTestPlay)
         {
             currentGame = LoadGamePackage();
@@ -377,6 +378,8 @@ public class GameManager : MonoBehaviour
             {
                 //Initialization();
                 SceneManager.LoadSceneAsync("Title", LoadSceneMode.Additive);
+                mode = PlayMode.None;
+                isCanPause = false;
             });
     }
 
