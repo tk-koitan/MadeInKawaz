@@ -27,55 +27,45 @@ namespace TadaGame2
         // Start is called before the first frame update
         void Start()
         {
-            finish_obj_.transform.position = finish_move_pos_;
-            GameManager.ClearActionQueue.Enqueue(() =>
-           {
-               if (GameManager.ClearFlag)
-               {
-                   finish_obj_.sprite = clear_sprite_;
-                    // 背景を明るくする
-                    background_.DOColor(new Color(1.0f, 1.0f, 1.0f, 1.0f), move_duration_ / 4f);
-               }
-               else
-               {
-                   finish_obj_.sprite = failed_sprite_;
-               }
+           // finish_obj_.transform.position = finish_move_pos_;
+           // GameManager.ClearActionQueue.Enqueue(() =>
+           //{
+           //    if (GameManager.ClearFlag)
+           //    {
+           //        finish_obj_.sprite = clear_sprite_;
+           //         // 背景を明るくする
+           //         background_.DOColor(new Color(1.0f, 1.0f, 1.0f, 1.0f), move_duration_ / 4f);
+           //    }
+           //    else
+           //    {
+           //        finish_obj_.sprite = failed_sprite_;
+           //    }
 
-                // 左から右へと画像を表示させる
-                finish_obj_.transform.position = finish_move_pos_;
-               finish_obj_.transform.DOMoveX(0f, move_duration_ / 2f).SetEase(Ease.OutQuart).OnComplete(() =>
-               finish_obj_.transform.DOMoveX(-finish_move_pos_.x, move_duration_ / 2f).SetEase(Ease.InQuart));
-           });
-        }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                finish_obj_.sprite = clear_sprite_;
-                // 背景を明るくする
-                background_.DOColor(new Color(1.0f, 1.0f, 1.0f, 1.0f), move_duration_ / 4f);
-
-                // 左から右へと画像を表示させる
-                finish_obj_.transform.position = finish_move_pos_;
-                finish_obj_.transform.DOMoveX(0f, move_duration_ / 2f).SetEase(Ease.InOutQuart).OnComplete(() =>
-                finish_obj_.transform.DOMoveX(-finish_move_pos_.x, move_duration_ / 2f).SetEase(Ease.InQuart));
-            }
-            if (Input.GetKeyDown(KeyCode.B))
-            {
-                finish_obj_.sprite = failed_sprite_;
-                // 左から右へと画像を表示させる
-                finish_obj_.transform.position = finish_move_pos_;
-                finish_obj_.transform.DOMoveX(0f, move_duration_ / 2f).SetEase(Ease.InOutQuart).OnComplete(() =>
-                finish_obj_.transform.DOMoveX(-finish_move_pos_.x, move_duration_ / 2f).SetEase(Ease.InQuart));
-            }
+           //     // 左から右へと画像を表示させる
+           //     finish_obj_.transform.position = finish_move_pos_;
+           //    finish_obj_.transform.DOMoveX(0f, move_duration_ / 2f).SetEase(Ease.OutQuart).OnComplete(() =>
+           //    finish_obj_.transform.DOMoveX(-finish_move_pos_.x, move_duration_ / 2f).SetEase(Ease.InQuart));
+           //});
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (!GameManager.ClearFlag)
+            if (GameManager.ClearFlag) return;
+
+            float goal_y = transform.position.y + GetComponent<CircleCollider2D>().offset.y * transform.localScale.y;
+
+            // 下向きの速度があり，かつゴールの上から入ったらクリア
+            if (collision.GetComponent<Rigidbody2D>().velocity.y < 0f && goal_y < collision.transform.position.y)
             {
                 GameManager.Clear();
+                finish_obj_.transform.position = finish_move_pos_;
+                finish_obj_.sprite = clear_sprite_;
+                // 背景を明るくする
+                background_.DOColor(new Color(1.0f, 1.0f, 1.0f, 1.0f), move_duration_ / 4f);
+                // 左から右へと画像を表示させる
+                finish_obj_.transform.position = finish_move_pos_;
+                finish_obj_.transform.DOMoveX(0f, move_duration_ / 2f).SetEase(Ease.OutQuart).OnComplete(() =>
+                finish_obj_.transform.DOMoveX(-finish_move_pos_.x, move_duration_ / 2f).SetEase(Ease.InQuart));
             }
         }
     }
