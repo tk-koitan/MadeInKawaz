@@ -32,7 +32,7 @@ public class NumberButton : MonoBehaviour
             for (int i = 0; i < 3; i++)
             {
                 //ボタンが押された時
-                if (GUI.Button(new Rect(Screen.width / 2 + 200 * (i - 1), Screen.height - 110, 100, 100), (leftNumber + i).ToString()))
+                if (GUI.Button(new Rect(Screen.width / 2 + 200 * (i - 1) - 80, Screen.height - 200, 150, 150), (leftNumber + i).ToString()))
                 {
                     //ボタンに表示されてる数字と一致したら
                     if (leftNumber +i  == movingThingSpawner.GetComponent<MovingThingSpawner>().correctNumber)
