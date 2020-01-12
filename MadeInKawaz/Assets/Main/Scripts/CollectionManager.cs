@@ -17,7 +17,7 @@ public class CollectionManager : MonoBehaviour
     [SerializeField]
     private GameObject appButton, canvas;
     [SerializeField]
-    private TextMeshProUGUI titleText, explanationText, authorText;
+    private TextMeshProUGUI titleText, explanationText, authorText, highScoreText;
     [SerializeField]
     private Image screenshotIm;
     [SerializeField]
@@ -63,6 +63,9 @@ public class CollectionManager : MonoBehaviour
         explanationText.text = gamePackage.explanation;
         authorText.text = "つくったひと : " + gamePackage.authorName;
         screenshotIm.sprite = gamePackage.screenshotImage;
+
+
+        highScoreText.text = "ハイスコア：" + System.String.Format("{0, 3}", ScoreManager.Instance.GetScoreData(gamePackage.sceneName).Scores[0].ToString());
 
         app.SetActive(true);
         app.transform.localScale = Vector3.zero;
