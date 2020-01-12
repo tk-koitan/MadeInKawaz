@@ -74,15 +74,18 @@ namespace Result
 
         public void Retry()
         {
-            GameManager.mode = GameManager.PlayMode.Normal;
+            //ゲームモードの変更タイミングを変えた by koitan
+            //GameManager.mode = GameManager.PlayMode.Normal;
             GameManager.Instance.Initialization();
             SceneManager.UnloadSceneAsync("ResultScene");
         }
 
         public void End()
         {
-            SceneManager.UnloadSceneAsync("ResultScene");
+            //このタイミングでゲームモードをNoneにする by koitan
+            GameManager.mode = GameManager.PlayMode.None;
             SceneManager.LoadSceneAsync("Title", LoadSceneMode.Additive);
+            SceneManager.UnloadSceneAsync("ResultScene");            
         }
     }
 } // namespace Result

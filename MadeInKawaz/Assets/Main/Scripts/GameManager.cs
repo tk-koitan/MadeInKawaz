@@ -372,6 +372,7 @@ public class GameManager : MonoBehaviour
             {
                 Time.timeScale = 1;
                 backgrondAnim.Play("Finish");
+                isCanPause = false;
             })
             .AppendInterval(1f)
             .AppendCallback(() =>
@@ -383,8 +384,7 @@ public class GameManager : MonoBehaviour
             else if (mode == PlayMode.Single) ScoreManager.Instance.RegisterScore(number, singleGame.sceneName);
             // リザルト画面を呼び出す
                 SceneManager.LoadSceneAsync("ResultScene", LoadSceneMode.Additive);
-                mode = PlayMode.None;
-                isCanPause = false;
+                //mode = PlayMode.None;                
 
                 // データをセーブする
                 TadaLib.Save.SaveManager.Instance.Save();
