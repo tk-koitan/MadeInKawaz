@@ -376,10 +376,18 @@ public class GameManager : MonoBehaviour
             .AppendInterval(1f)
             .AppendCallback(() =>
             {
-                //Initialization();
-                SceneManager.LoadSceneAsync("Title", LoadSceneMode.Additive);
+            //Initialization();
+            //SceneManager.LoadSceneAsync("Title", LoadSceneMode.Additive);
+            // スコアを登録
+            if (mode == PlayMode.Normal) ScoreManager.Instance.RegisterScore(number);
+            else if (mode == PlayMode.Single) ScoreManager.Instance.RegisterScore(number, singleGame.sceneName);
+            // リザルト画面を呼び出す
+                SceneManager.LoadSceneAsync("ResultScene", LoadSceneMode.Additive);
                 mode = PlayMode.None;
                 isCanPause = false;
+
+                // データをセーブする
+                TadaLib.Save.SaveManager.Instance.Save();
             });
     }
 

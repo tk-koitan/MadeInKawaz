@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using TadaLib.Save;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 namespace Result
 {
@@ -69,6 +70,19 @@ namespace Result
         public void DisableButtonBlocker()
         {
             button_blocker_.gameObject.SetActive(false);
+        }
+
+        public void Retry()
+        {
+            GameManager.mode = GameManager.PlayMode.Normal;
+            GameManager.Instance.Initialization();
+            SceneManager.UnloadSceneAsync("ResultScene");
+        }
+
+        public void End()
+        {
+            SceneManager.UnloadSceneAsync("ResultScene");
+            SceneManager.LoadSceneAsync("Title", LoadSceneMode.Additive);
         }
     }
 } // namespace Result
