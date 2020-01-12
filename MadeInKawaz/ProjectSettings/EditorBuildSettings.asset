@@ -33,6 +33,11 @@ EditorBuildSettings:
     path: Assets/Koitan/yoke/Scenes/yoke.unity
     guid: 24dc7bbbffb624bf987742908e06e3ab
   - enabled: 1
+<<<<<<< HEAD
     path: Assets/Tada/Result/Scene/ResultScene.unity
     guid: 0585f500338dc3e41a1e0f324412205c
+=======
+    path: Assets/Zakky/Kazoe/Scenes/Kazoe.unity
+    guid: 07b9c23ed9cb4cc419d061b3e88048ef
+>>>>>>> 3d89502d058805c8161ec866ff956d002ded9b05
   m_configObjects: {}
