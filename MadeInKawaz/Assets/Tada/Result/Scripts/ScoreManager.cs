@@ -3,6 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using TadaLib.Save;
 
+/// <summary>
+/// スコアデータを管理するクラス
+/// 
+/// 以下使いかた
+/// 1. RegisterScore(score, game_scene_name) でスコアを登録
+/// 2. Score score = GetScoreData(game_scene_name) でそのゲームのスコアデータを取得
+/// 3. score.Scoresでランキング順に並んだスコアのリストを取得できる
+/// 
+/// </summary>
+
 // 1からn位までのスコアデータ これを作ったのは2次元配列をJsonUtilityで保存できないから
 [System.Serializable]
 public class Score
@@ -179,6 +189,10 @@ public class ScoreManager : MonoBehaviour
     // ゲームのシーン名とゲームIDを対応させる
     private Dictionary<string, int> dic_;
 #endregion
+    // 登録された最新のゲームシーン名
+    public string LatestGame { private set; get; }
+    // 登録された最新のスコアの順位
+    public int LatestRank { private set; get; }
 
     private void Awake()
     {
@@ -188,6 +202,8 @@ public class ScoreManager : MonoBehaviour
             dic_ = new Dictionary<string, int>();
             data_ = new ScoreData();
             data_.Init(game_set_.games.Length + 1, display_rank_length_);
+            LatestGame = kGotyamaze;
+            LatestRank = -1;
             AssouciateGame();
             DontDestroyOnLoad(this);
         }
@@ -203,7 +219,9 @@ public class ScoreManager : MonoBehaviour
     // スコアを登録する ランクを返す(ランク外の場合は-1) 引数は @score=得点，@game_scene_name=ゲームのシーン名
     public int RegisterScore(int score, string game_scene_name = kGotyamaze)
     {
-        return data_.RegisterScore(score, dic_[game_scene_name]);
+        LatestGame = game_scene_name;
+        LatestRank = data_.RegisterScore(score, dic_[game_scene_name]);
+        return LatestRank;
     }
 
     private void AssouciateGame()

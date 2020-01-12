@@ -51,6 +51,11 @@ namespace TadaLib
             // セーブ予定のデータをすべてセーブする
             public void Save()
             {
+                if(save_action_queue_.Count >= 1)
+                {
+                    DebugNotificationGenerator.Notify("セーブしました");
+                }
+
                 while (save_action_queue_.Count >= 1)
                 {
                     save_action_queue_.Dequeue()();
