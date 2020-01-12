@@ -4,40 +4,5 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes:
-  - enabled: 1
-    path: Assets/Main/Scenes/Title.unity
-    guid: 636e2f9794d5c47f1a32a88911ca0494
-  - enabled: 1
-    path: Assets/Main/Scenes/ManagerScene.unity
-    guid: 266aceaa3cdef4be0a5a909ae9f5233c
-  - enabled: 1
-    path: Assets/SampleGame/Scenes/SampleGame.unity
-    guid: 1fbd8adeb374745cda331bcc444738e4
-  - enabled: 1
-    path: Assets/Tada/Game2/Scenes/TadaGame2.unity
-    guid: e1a668e2c1762644bbe7db2c490c08dd
-  - enabled: 1
-    path: Assets/Tada/Game1/Scene/TadaGame1.unity
-    guid: cdd76bd0225c26941a0f053f7c3d90cb
-  - enabled: 1
-    path: Assets/Koitan/G/Scenes/G.unity
-    guid: 5f8edea60110445a88e26f8c6a4dddaf
-  - enabled: 1
-    path: Assets/Nin/NinGame1.unity
-    guid: aab4d58e3f5a3404f810a230a9dc0851
-  - enabled: 1
-    path: Assets/Main/Scenes/Library.unity
-    guid: f4f02f184010241978e9a8b3a179e03f
-  - enabled: 1
-    path: Assets/Koitan/yoke/Scenes/yoke.unity
-    guid: 24dc7bbbffb624bf987742908e06e3ab
-  - enabled: 1
-<<<<<<< HEAD
-    path: Assets/Tada/Result/Scene/ResultScene.unity
-    guid: 0585f500338dc3e41a1e0f324412205c
-=======
-    path: Assets/Zakky/Kazoe/Scenes/Kazoe.unity
-    guid: 07b9c23ed9cb4cc419d061b3e88048ef
->>>>>>> 3d89502d058805c8161ec866ff956d002ded9b05
+  m_Scenes: []
   m_configObjects: {}
