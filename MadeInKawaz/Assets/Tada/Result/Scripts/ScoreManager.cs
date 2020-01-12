@@ -109,7 +109,8 @@ public class ScoreData : BaseSaver<ScoreData>
     public void Init(int game_num, int display_rank_length)
     {
         ScoreData data = Load(kFileName);
-        scores_ = data.Scores;
+        if (data == null) scores_ = new List<Score>();
+        else scores_ = data.Scores;
 
         rank_length_ = display_rank_length;
 
