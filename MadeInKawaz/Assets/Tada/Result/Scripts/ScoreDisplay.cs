@@ -17,6 +17,10 @@ namespace Result
         [SerializeField]
         private Button button_blocker_;
 
+        // 背景を徐々に暗くする
+        [SerializeField]
+        private SpriteRenderer background_;
+
         [SerializeField]
         private GamePackageSet set_;
 
@@ -28,6 +32,7 @@ namespace Result
             score_manager_ = ScoreManager.Instance;
 
             text_.rectTransform.DOShakePosition(1, 3).SetLoops(-1);
+            background_.DOFade(0.5f, 1.0f);
 
             StartCoroutine(NamaeOmoitukan(2.0f));
 

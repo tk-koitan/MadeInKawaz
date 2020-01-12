@@ -12,6 +12,10 @@ namespace TadaGame1
 {
     public class QuizProvider : MonoBehaviour
     {
+        // ゲームが終了したかどうか
+        public bool IsFinished { private set; get; }
+
+        #region field
         // 対象のスプライト
         [SerializeField]
         private Sprite[] sprites_;
@@ -32,10 +36,13 @@ namespace TadaGame1
         private Sprite clear_background_;
         [SerializeField]
         private Sprite failed_background_;
+        #endregion
 
         // Start is called before the first frame update
         void Start()
         {
+            IsFinished = false;
+
             int item_num = items_.Length;
             int sprite_num = sprites_.Length;
 
@@ -78,31 +85,16 @@ namespace TadaGame1
                     items_[i].SetIsAtari(i == answer_index);
                 }
             }
-
-            GameManager.ClearActionQueue.Enqueue(() =>
-            {
-                // アイテムにアニメーションを
-                for(int i = 0; i < item_num; ++i)
-                {
-                    items_[i].DoAnimate(true);
-                }
-                background_.sprite = clear_background_;
-            });
-            //GameManager.FailedActionQueue.Enqueue(() =>
-            //{
-            //    // アイテムにアニメーションを
-            //    for (int i = 0; i < item_num; ++i)
-            //    {
-            //        items_[i].DoAnimate(false);
-            //    }
-            //    background_.sprite = failed_background_;
-            //});
         }
 
-        private void Update()
+        public void RequestResult(bool clear)
         {
-            if (Input.GetKeyDown(KeyCode.A))
+            IsFinished = true;
+            Debug.Log("end");
+
+            if (clear)
             {
+                GameManager.Clear();
                 // アイテムにアニメーションを
                 for (int i = 0; i < items_.Length; ++i)
                 {
@@ -110,7 +102,7 @@ namespace TadaGame1
                 }
                 background_.sprite = clear_background_;
             }
-            if (Input.GetKeyDown(KeyCode.B))
+            else
             {
                 // アイテムにアニメーションを
                 for (int i = 0; i < items_.Length; ++i)

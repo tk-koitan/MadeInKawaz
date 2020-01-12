@@ -9,6 +9,7 @@ namespace TadaGame1
     //[RequireComponent(typeof(Animator))]
     public class ItemController : MonoBehaviour
     {
+        #region field
         [SerializeField]
         private GameObject body;
 
@@ -19,6 +20,10 @@ namespace TadaGame1
         private BoxCollider2D hit_box_;
 
         private bool is_atari_ = false;
+
+        [SerializeField]
+        private QuizProvider provider_;
+        #endregion
 
         // Start is called before the first frame update
         void Start()
@@ -34,7 +39,7 @@ namespace TadaGame1
         private void Update()
         {
             // 思いつかなかった
-            if (!GameManager.ClearFlag)
+            if (!provider_.IsFinished)
             {
                 if (Input.GetMouseButtonDown(0))
                 {
@@ -45,12 +50,8 @@ namespace TadaGame1
                             // 持ち上げる
                             transform.position += Vector3.up * 0.5f;
                             transform.DOMoveY(transform.position.y + 1f, 1f).SetEase(Ease.OutQuad);
-                            GameManager.Clear();
                         }
-                        else
-                        {
-
-                        }
+                        provider_.RequestResult(is_atari_);
                     }
                 }
             }

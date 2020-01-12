@@ -166,6 +166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   body: {fileID: 2084751591}
   sprite_ren_: {fileID: 2084751595}
+  provider_: {fileID: 284233780}
 --- !u!1 &135939682
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,6 +213,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   body: {fileID: 1878909606}
   sprite_ren_: {fileID: 1878909609}
+  provider_: {fileID: 284233780}
 --- !u!1 &263132307
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,7 +224,6 @@ GameObject:
   m_Component:
   - component: {fileID: 263132310}
   - component: {fileID: 263132309}
-  - component: {fileID: 263132308}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -230,14 +231,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &263132308
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 263132307}
-  m_Enabled: 1
 --- !u!20 &263132309
 Camera:
   m_ObjectHideFlags: 0
@@ -907,6 +900,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   body: {fileID: 1133443473}
   sprite_ren_: {fileID: 1133443477}
+  provider_: {fileID: 284233780}
 --- !u!1 &1133443473
 GameObject:
   m_ObjectHideFlags: 0
@@ -1080,6 +1074,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   body: {fileID: 796037308}
   sprite_ren_: {fileID: 796037312}
+  provider_: {fileID: 284233780}
 --- !u!1 &1506563476
 GameObject:
   m_ObjectHideFlags: 0
@@ -1192,6 +1187,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   body: {fileID: 713976117}
   sprite_ren_: {fileID: 713976121}
+  provider_: {fileID: 284233780}
 --- !u!1 &1878909606
 GameObject:
   m_ObjectHideFlags: 0
@@ -1373,7 +1369,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 85b015f7cd923fa45871e87663ad3bfa, type: 3}
   m_Color: {r: 0.03137255, g: 0.03137255, b: 0.03137255, a: 1}
   m_FlipX: 0
