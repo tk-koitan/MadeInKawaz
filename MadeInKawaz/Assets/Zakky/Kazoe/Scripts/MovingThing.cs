@@ -20,6 +20,7 @@ public class MovingThing : MonoBehaviour
         target = new Vector3(Random.Range(-width / 2, width / 2), Random.Range(-height / 2, height / 2) + 3, 0);
         transform.position = new Vector3(Random.Range(-width / 2, width / 2), Random.Range(-height / 2, height / 2) + 3, 0);
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        GetComponent<Animator>().speed = Random.Range(0.5f, 1f);
     }
 
     // Update is called once per frame

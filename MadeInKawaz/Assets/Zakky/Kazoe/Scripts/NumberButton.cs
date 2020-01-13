@@ -4,25 +4,39 @@ using UnityEngine;
 
 public class NumberButton : MonoBehaviour
 {
-    // Start is called before the first frame update
-    bool canPush = true;
+    public GameObject movingThingSpawner;
+
+    [SerializeField]
+    GameObject[] buttons;
+
+    [System.NonSerialized]
+    public bool canPush = true;
+    [System.NonSerialized]
+    public int correctNumber;
+
     int numberIndex;
     int leftNumber;
 
-    public GameObject movingThingSpawner;
+    // Start is called before the first frame update
     void Start()
     {
-        numberIndex = Random.Range(0, 3);
+        numberIndex = Random.Range(0, buttons.Length);
+        correctNumber = movingThingSpawner.GetComponent<MovingThingSpawner>().correctNumber;
         //一番左の数字を正解の数字から-0~-2する
-        leftNumber = movingThingSpawner.GetComponent<MovingThingSpawner>().correctNumber - numberIndex;
+        leftNumber = correctNumber - numberIndex;
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            buttons[i].GetComponent<Buttons>().buttonNumber = leftNumber + i;
+        }
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    //void Update()
+    //{
+    //    
+    //}
 
+    /*
     private void OnGUI()
     {
         //ボタンが押せる
@@ -35,7 +49,7 @@ public class NumberButton : MonoBehaviour
                 if (GUI.Button(new Rect(Screen.width / 2 + 200 * (i - 1) - 80, Screen.height - 200, 150, 150), (leftNumber + i).ToString()))
                 {
                     //ボタンに表示されてる数字と一致したら
-                    if (leftNumber +i  == movingThingSpawner.GetComponent<MovingThingSpawner>().correctNumber)
+                    if (leftNumber + i  == movingThingSpawner.GetComponent<MovingThingSpawner>().correctNumber)
                     {
                         //ゲームクリア
                         GameManager.Clear();
@@ -46,4 +60,5 @@ public class NumberButton : MonoBehaviour
             }
         }
     }
+    */
 }
