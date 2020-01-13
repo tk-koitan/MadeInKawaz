@@ -105,7 +105,7 @@ public class GameManager : MonoBehaviour
             Initialization();
         }
 
-        statementMesh.gameObject.SetActive(false);        
+        statementMesh.gameObject.SetActive(false);
 
         //デバッグ用
         //EndGame();
@@ -249,16 +249,16 @@ public class GameManager : MonoBehaviour
                 if (!gameScene.IsValid())
                 {
                     async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-                    async.allowSceneActivation = false;                    
+                    async.allowSceneActivation = false;
                 }
             })
             .AppendInterval(0.25f)
             .AppendCallback(() =>
-            {                
+            {
                 TimeCountManager.CountDownStart(waitTime);
                 CameraZoomUp();
                 Instance.async.allowSceneActivation = true;
-                IsGamePlaying = true;                
+                IsGamePlaying = true;
             })
             .AppendInterval(waitTime)
             .OnComplete(() =>
@@ -355,7 +355,7 @@ public class GameManager : MonoBehaviour
                     Finish();
                 }
                 else
-                {                    
+                {
                     backgrondAnim.Play("Ready");
                     number++;
                     numberMesh.text = number.ToString();
@@ -377,12 +377,12 @@ public class GameManager : MonoBehaviour
             .AppendInterval(1f)
             .AppendCallback(() =>
             {
-            //Initialization();
-            //SceneManager.LoadSceneAsync("Title", LoadSceneMode.Additive);
-            // スコアを登録
-            if (mode == PlayMode.Normal) ScoreManager.Instance.RegisterScore(number);
-            else if (mode == PlayMode.Single) ScoreManager.Instance.RegisterScore(number, singleGame.sceneName);
-            // リザルト画面を呼び出す
+                //Initialization();
+                //SceneManager.LoadSceneAsync("Title", LoadSceneMode.Additive);
+                // スコアを登録
+                if (mode == PlayMode.Normal) ScoreManager.Instance.RegisterScore(number);
+                else if (mode == PlayMode.Single) ScoreManager.Instance.RegisterScore(number, singleGame.sceneName);
+                // リザルト画面を呼び出す
                 SceneManager.LoadSceneAsync("ResultScene", LoadSceneMode.Additive);
                 //mode = PlayMode.None;                
 
@@ -393,7 +393,7 @@ public class GameManager : MonoBehaviour
 
     public static void Clear()
     {
-        if (!ClearFlag && IsGamePlaying)
+        if (!ClearFlag && (IsGamePlaying || mode == PlayMode.None))
         {
             ClearFlag = true;
             EffectManager.EmitEffect(EffectCode.Kamihubuki);
