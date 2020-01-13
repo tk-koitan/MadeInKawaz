@@ -41,6 +41,7 @@ public class Buttons : MonoBehaviour
             {
                 //ゲームクリア
                 GameManager.Clear();
+                numberButton.GetComponent<NumberButton>().stageClear = true;
             }
             //押せなくする
             numberButton.GetComponent<NumberButton>().canPush = false;

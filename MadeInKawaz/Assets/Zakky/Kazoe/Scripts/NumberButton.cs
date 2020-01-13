@@ -13,6 +13,8 @@ public class NumberButton : MonoBehaviour
     public bool canPush = true;
     [System.NonSerialized]
     public int correctNumber;
+    [System.NonSerialized]
+    public bool stageClear = false;
 
     int numberIndex;
     int leftNumber;

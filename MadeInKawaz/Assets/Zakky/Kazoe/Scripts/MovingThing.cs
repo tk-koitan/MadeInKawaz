@@ -5,18 +5,21 @@ using UnityEngine;
 public class MovingThing : MonoBehaviour
 {
     //こいたんくんさんのゴキブリパクりました
+    GameObject numberButton;
 
     [SerializeField]
     float speed = 100;
-    Vector3 target = Vector3.zero;
     [SerializeField]
     float width = 2000;
     [SerializeField]
     float height = 1000;
+
     SpriteRenderer spriteRenderer;
+    Vector3 target = Vector3.zero;
     // Start is called before the first frame update
     void Start()
     {
+        numberButton = GameObject.Find("NumberButton");
         target = new Vector3(Random.Range(-width / 2, width / 2), Random.Range(-height / 2, height / 2) + 3, 0);
         transform.position = new Vector3(Random.Range(-width / 2, width / 2), Random.Range(-height / 2, height / 2) + 3, 0);
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -26,6 +29,11 @@ public class MovingThing : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (numberButton.GetComponent<NumberButton>().stageClear)
+        {
+            GetComponent<Animator>().speed = 2f;
+            speed = 20f;
+        }
         if ((target - transform.position).magnitude < 1f)
         {
             target = new Vector3(Random.Range(-width / 2, width / 2), Random.Range(-height / 2, height / 2) + 3, 0);
