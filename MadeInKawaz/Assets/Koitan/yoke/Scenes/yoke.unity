@@ -431,6 +431,7 @@ GameObject:
   - component: {fileID: 1159001687}
   - component: {fileID: 1159001686}
   - component: {fileID: 1159001688}
+  - component: {fileID: 1159001689}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -519,6 +520,22 @@ MonoBehaviour:
   bullet: {fileID: -2457778353747047154, guid: cf35392019996d54d960c7e8c9140335, type: 3}
   height: 4.5
   moveSpeedRange: {x: 2, y: 3}
+--- !u!114 &1159001689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159001685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d7552a492d6a054aa732623f00d0bfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 5564381801768828316, guid: cf35392019996d54d960c7e8c9140335, type: 3}
+  maxCount: 100
+  prepareCount: 50
+  interval: 3
 --- !u!1 &1272338531
 GameObject:
   m_ObjectHideFlags: 0

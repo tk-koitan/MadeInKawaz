@@ -22,12 +22,16 @@ namespace yoke
         private Vector2 moveSpeedRange = new Vector2(0.5f, 1.5f);
         private float moveSpeed;
 
+        private Pool pool;
+
 
         private float dir = -1f;
 
         // Start is called before the first frame update
         void Start()
         {
+            pool = GetComponent<Pool>();
+
             moveSpeed = Random.Range(moveSpeedRange.x, moveSpeedRange.y);
             StartCoroutine(BulletShot(n_way, dir_diff, interval));
             transform.position = new Vector2(transform.position.x, Random.Range(-height, height));
@@ -48,8 +52,10 @@ namespace yoke
                 //++n;
                 for (int i = -n / 2; i <= n / 2; ++i)
                 {
-                    BulletController bulletObj = Instantiate(bullet, transform.position, Quaternion.identity);
-                    bulletObj.Init(Quaternion.Euler(0f, 0f, dir * i) * Vector2.left);
+                    GameObject bulletObj = pool.GetInstance();
+                    Vector3 pos = transform.position;
+                    bulletObj.transform.position = new Vector3(pos.x, pos.y, 0f);
+                    bulletObj.GetComponent<BulletController>().Init(Quaternion.Euler(0f, 0f, dir * i) * Vector2.left);
                 }
             }
         }
