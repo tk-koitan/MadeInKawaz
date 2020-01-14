@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using TadaLib.Save;
+using System.IO;
 
 /// <summary>
 /// データをセーブ・ロードするクラス
@@ -62,11 +63,45 @@ namespace TadaLib
                 }
             }
 
+            // データを全削除する 保存ディレクトリがDataフォルダとは限らないので非常によくない
+            public void DeleteAllData()
+            {
+                string path = Application.persistentDataPath + "/" + "Data";
+                Delete(path);
+                Debug.Log("セーブデータを全削除しました");
+            }
+
             // セーブしたいデータを持つクラスのセーブ関数を登録する
 
             public void RequestSave(Action save_method)
             {
                 save_action_queue_.Enqueue(save_method);
+            }
+
+            private void Delete(string targetDirectoryPath)
+            {
+                if (!Directory.Exists(targetDirectoryPath))
+                {
+                    return;
+                }
+
+                //ディレクトリ以外の全ファイルを削除
+                string[] filePaths = Directory.GetFiles(targetDirectoryPath);
+                foreach (string filePath in filePaths)
+                {
+                    File.SetAttributes(filePath, FileAttributes.Normal);
+                    File.Delete(filePath);
+                }
+
+                //ディレクトリの中のディレクトリも再帰的に削除
+                string[] directoryPaths = Directory.GetDirectories(targetDirectoryPath);
+                foreach (string directoryPath in directoryPaths)
+                {
+                    Delete(directoryPath);
+                }
+
+                //中が空になったらディレクトリ自身も削除
+                Directory.Delete(targetDirectoryPath, false);
             }
         }
     } // namespace Save

@@ -39,7 +39,18 @@ namespace TadaLib
                 //if (null == instance)
                 {
                     string json = "";
-                    if (File.Exists(GetFilePath(fileName))) json = File.ReadAllText(GetFilePath(fileName));
+                    if (File.Exists(GetFilePath(fileName)))
+                    {
+                        string tmp_json = File.ReadAllText(GetFilePath(fileName));
+                        // 復号化
+                        string jaming = GetSaveKey();
+                        int cnt = -1;
+                        int n = jaming.Length;
+                        for (int i = 0; i < tmp_json.Length; ++i)
+                        {
+                            json += (char)((int)tmp_json[i] - (int)jaming[++cnt % n]);
+                        }
+                    }
                     if (json.Length > 0) LoadFromJSON(json);
                     else
                     {
@@ -57,8 +68,18 @@ namespace TadaLib
                 if (isLoaded)
                 {
                     isSaving = true;
+                    // 暗号化する 元のセーブデータにある文字列をASCIIコードで足し合わせる 通常127までだからオーバーフローしないよね？
                     string path = GetFilePath(fileName);
-                    File.WriteAllText(path, JsonUtility.ToJson(this));
+                    string json = JsonUtility.ToJson(this);
+                    string jaming = GetSaveKey();
+                    int cnt = -1;
+                    int n = jaming.Length;
+                    string new_json = "";
+                    for(int i = 0; i < json.Length; ++i)
+                    {
+                        new_json += (char)((int)json[i] + (int)jaming[++cnt % n]);
+                    }
+                    File.WriteAllText(path, new_json);
 
                     Debug.Log(path + "にセーブしました");
 
