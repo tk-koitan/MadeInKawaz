@@ -12,6 +12,9 @@ namespace yoke
         [SerializeField]
         private float width, height;
 
+        [SerializeField]
+        private GameObject gestureHand;
+
         // クリアフラグ
         private float timer;
 
@@ -40,6 +43,7 @@ namespace yoke
             if (Input.GetMouseButtonDown(0))
             {
                 oldPos = mousePos;
+                gestureHand.SetActive(false);
             }
 
             if (Input.GetMouseButton(0))
