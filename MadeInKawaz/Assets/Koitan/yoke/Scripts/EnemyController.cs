@@ -7,6 +7,10 @@ namespace yoke
     public class EnemyController : MonoBehaviour
     {
         [SerializeField]
+        private int n_way = 3;
+        [SerializeField]
+        private float dir_diff = 30f;
+        [SerializeField]
         private float interval = 0.5f;
 
         [SerializeField]
@@ -15,32 +19,40 @@ namespace yoke
         [SerializeField]
         private float height;
         [SerializeField]
-        private float moveSpeed = 1.0f;
+        private Vector2 moveSpeedRange = new Vector2(0.5f, 1.5f);
+        private float moveSpeed;
 
-        private float dir = 1f;
-        private float timer;
+
+        private float dir = -1f;
 
         // Start is called before the first frame update
         void Start()
         {
-            timer = 0f;
+            moveSpeed = Random.Range(moveSpeedRange.x, moveSpeedRange.y);
+            StartCoroutine(BulletShot(n_way, dir_diff, interval));
+            transform.position = new Vector2(transform.position.x, Random.Range(-height, height));
         }
 
         // Update is called once per frame
         void Update()
         {
             Move();
-
-            timer += Time.deltaTime;
-            if(timer >= interval)
-            {
-                timer = 0f;
-                BulletController bulletObj = Instantiate(bullet, transform.position, Quaternion.identity);
-                bulletObj.Init(new Vector2(-1, Random.Range(-0.5f, 0.5f)));
-                //Instantiate(bullet, transform);
-            }
         }
 
+        private IEnumerator BulletShot(int n, float dir, float interval)
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(interval);
+                // n way shot
+                //++n;
+                for (int i = -n / 2; i <= n / 2; ++i)
+                {
+                    BulletController bulletObj = Instantiate(bullet, transform.position, Quaternion.identity);
+                    bulletObj.Init(Quaternion.Euler(0f, 0f, dir * i) * Vector2.left);
+                }
+            }
+        }
         private void Move()
         {
             transform.position += Vector3.up * moveSpeed * dir * Time.deltaTime;
