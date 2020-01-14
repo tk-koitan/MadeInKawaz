@@ -16,7 +16,7 @@ MonoBehaviour:
   titleName: "\u306D\u305A\u307F\u3068\u306D\u3053"
   authorName: nin
   developerName: Kawaz
-  statement: "\u306B\u3052\u308D\uFF01"
+  statement: "\u306F\u3057\u308C\uFF01"
   explanation: "\u8D70\u3063\u3066\u8D70\u3063\u3066\u8D70\u308A\u307E\u304F\u308C\uFF01"
   gameType: 0
   iconImage: {fileID: 21300000, guid: 682d10b0756e62846919a4c2949402d0, type: 3}

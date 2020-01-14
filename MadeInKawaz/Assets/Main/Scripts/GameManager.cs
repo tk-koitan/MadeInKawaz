@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI statementMesh;
     [SerializeField]
+    private TextMeshProUGUI highScoreMesh;
+    [SerializeField]
     private string sceneName;
     private AsyncOperation async;
     private Scene gameScene;
@@ -51,9 +53,9 @@ public class GameManager : MonoBehaviour
     public static bool IsGamePlaying { get; private set; }
     private static Queue<int> gameQueue = new Queue<int>();
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
+        //シングルトンはAwake内で呼び出し、それ以外はStartで
         if (Instance == null)
         {
             Instance = this;
@@ -63,7 +65,11 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this);
         }
+    }
 
+    // Start is called before the first frame update
+    void Start()
+    {        
         Time.timeScale = 1;
 
 #if UNITY_EDITOR
@@ -154,6 +160,7 @@ public class GameManager : MonoBehaviour
         gameQueue.Clear();
         ClearFlag = false;
         numberMesh.transform.localScale = Vector3.one;
+        highScoreMesh.text = "ハイスコア：" + System.String.Format("{0, 3}", ScoreManager.Instance.GetScoreData().Scores[0].ToString());
         if (isTestPlay)
         {
             currentGame = LoadGamePackage();
