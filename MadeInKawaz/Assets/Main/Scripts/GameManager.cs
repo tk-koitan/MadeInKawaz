@@ -29,7 +29,11 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private RawImage transitionImage;
     [SerializeField]
-    private RectTransform trasitionMask;
+    private Mask trasitionMask;
+    [SerializeField]
+    private RawImage screenImage;
+    [SerializeField]
+    private Camera renderCamera;
     [SerializeField]
     private TextMeshPro numberMesh;
     public int number { get; private set; }
@@ -52,6 +56,7 @@ public class GameManager : MonoBehaviour
     private bool FinishFlag;
     public static bool IsGamePlaying { get; private set; }
     private static Queue<int> gameQueue = new Queue<int>();
+    public Texture2D tex;
 
     private void Awake()
     {
@@ -69,7 +74,7 @@ public class GameManager : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {        
+    {
         Time.timeScale = 1;
 
 #if UNITY_EDITOR
@@ -421,6 +426,7 @@ public class GameManager : MonoBehaviour
                 //Instance.transitionImage.DOFade(0, 0.5f);
                 //Instance.trasitionMask.DOSizeDelta(new Vector2(19200, 10800), 0.5f);                
                 Instance.trasitionMask.gameObject.SetActive(true);
+                Instance.trasitionMask.enabled = true;
                 Instance.trasitionMask.transform.DOScale(30, 0.5f).SetEase(Ease.InQuad);
                 Instance.transitionImage.transform.DOScale(0.2f, 0.5f).SetEase(Ease.InQuad);
             })
@@ -531,6 +537,84 @@ public class GameManager : MonoBehaviour
         DOTween.KillAll();//やばそうな実装
         mode = PlayMode.None;
         SceneManager.LoadSceneAsync("Title", LoadSceneMode.Additive);
+    }
+
+    public static void ScreenTrasition(string fromScene, string toScene, float time = 0.5f)
+    {
+        Scene scene;
+        AsyncOperation ao = null;
+        Sequence seq = DOTween.Sequence()
+                .OnStart(() =>
+                {
+                    Instance.screenImage.color = Color.white;
+                    //シーンを非同期で読み込み
+                    scene = SceneManager.GetSceneByName(toScene);
+                    if (!scene.IsValid())
+                    {
+                        ao = SceneManager.LoadSceneAsync(toScene, LoadSceneMode.Additive);
+                        ao.allowSceneActivation = false;
+                    }
+                })
+                .AppendInterval(1f)
+                .AppendCallback(() =>
+                {
+                    //Instance.renderCamera.enabled = false;
+                    Instance.screenImage.gameObject.SetActive(true);
+                    Instance.screenImage.DOFade(0, time - 1f);
+                    if (ao != null) ao.allowSceneActivation = true;
+                    if (fromScene != "ManagerScene")
+                    {
+                        SceneManager.UnloadSceneAsync(fromScene);
+                    }
+                })
+                .AppendInterval(time - 0.05f)
+                .AppendCallback(() =>
+                {
+                    Instance.screenImage.gameObject.SetActive(false);
+                    Instance.renderCamera.cullingMask = 0b00000001;//ManagerScene有効
+                });
+    }
+
+    public static void TrasitionScene(string fromScene, string toScene, float time = 0.5f)
+    {
+        Instance.StartCoroutine(Instance.ScreenShot(fromScene, toScene, time));
+    }
+
+    IEnumerator ScreenShot(string fromScene, string toScene, float time = 0.5f)
+    {
+        Scene scene;
+        AsyncOperation ao = null;
+
+        yield return new WaitForEndOfFrame();
+        // 画像生成
+        tex = new Texture2D(Screen.width, Screen.height, TextureFormat.RGBA32, false);
+        tex.alphaIsTransparency = true;
+        tex.ReadPixels(new Rect(0, 0, tex.width, tex.height), 0, 0);
+        tex.Apply();
+
+        screenImage.gameObject.SetActive(true);
+        screenImage.texture = tex;
+        screenImage.color = Color.white;
+        //シーンを非同期で読み込み
+        if(toScene != "ManagerScene")
+        {
+            SceneManager.LoadSceneAsync(toScene, LoadSceneMode.Additive);
+        }
+        if (fromScene != "ManagerScene")
+        {
+            SceneManager.UnloadSceneAsync(fromScene);
+        }
+        Instance.screenImage.DOFade(0, time).OnComplete(() => screenImage.gameObject.SetActive(false));
+
+        // byteデータに変換
+        byte[] bytes = tex.EncodeToPNG();
+        // 破棄
+        //DestroyImmediate(tex);
+        // 日付をファイル名にする
+        DateTime dt = DateTime.Now;
+        string dateStr = dt.Year + "_" + dt.Month + dt.Day + "_" + dt.Hour + dt.Minute + "_" + dt.Second;
+        // 保存
+        //File.WriteAllBytes(Application.dataPath + "/" + dateStr + ".png", bytes);
     }
 
     public enum PlayMode
