@@ -30,11 +30,14 @@ public class TitleMenuUI : MonoBehaviour
     {
         GameManager.mode = GameManager.PlayMode.Normal;
         GameManager.Instance.Initialization();
+        //SceneManager.UnloadSceneAsync("Title");
+        //GameManager.ScreenTrasition("Title","ManagerScene",10f);
         SceneManager.UnloadSceneAsync("Title");
     }
 
     public void LibraryStart()
     {
+        //GameManager.TrasitionScene("Title", "Library");
         SceneManager.LoadSceneAsync("Library", LoadSceneMode.Additive);
         SceneManager.UnloadSceneAsync("Title");
     }
