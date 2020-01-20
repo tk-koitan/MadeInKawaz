@@ -42,7 +42,7 @@ public class CollectionManager : MonoBehaviour
             Image im = obj.transform.GetChild(0).GetComponent<Image>();//プレハブの構造が変わると危険！
             obj.transform.localPosition = upperRightPos + new Vector3(width * (i % widthCount), -height * (i / widthCount));
             b.onClick.AddListener(() => AppIn(obj.transform.position, g));
-            im.sprite = g.iconImage;            
+            im.sprite = g.iconImage;
         }
         app.transform.SetAsLastSibling();
     }
@@ -86,10 +86,12 @@ public class CollectionManager : MonoBehaviour
         GameManager.Instance.singleGame = selectedGame;
         GameManager.Instance.Initialization();
         SceneManager.UnloadSceneAsync("Library");
+        //GameManager.TrasitionScene("Library", "ManagerScene");
     }
 
     public void BackTitle()
     {
+        //GameManager.TrasitionScene("Library", "Title");
         SceneManager.LoadSceneAsync("Title", LoadSceneMode.Additive);
         SceneManager.UnloadSceneAsync("Library");
     }

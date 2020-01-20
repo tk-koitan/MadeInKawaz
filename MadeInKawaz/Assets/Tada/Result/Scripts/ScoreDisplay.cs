@@ -77,6 +77,7 @@ namespace Result
             //ゲームモードの変更タイミングを変えた by koitan
             //GameManager.mode = GameManager.PlayMode.Normal;
             GameManager.Instance.Initialization();
+            //GameManager.TrasitionScene("ResultScene", "ManagerScene");            
             SceneManager.UnloadSceneAsync("ResultScene");
         }
 
@@ -84,8 +85,9 @@ namespace Result
         {
             //このタイミングでゲームモードをNoneにする by koitan
             GameManager.mode = GameManager.PlayMode.None;
+            //GameManager.TrasitionScene("ResultScene", "Title");
             SceneManager.LoadSceneAsync("Title", LoadSceneMode.Additive);
-            SceneManager.UnloadSceneAsync("ResultScene");            
+            SceneManager.UnloadSceneAsync("ResultScene");
         }
     }
 } // namespace Result

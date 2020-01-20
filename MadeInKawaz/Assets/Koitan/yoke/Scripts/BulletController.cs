@@ -21,7 +21,8 @@ namespace yoke
 
         public void Init(Vector2 _dir)
         {
-            accel = new Vector2(Random.Range(0f, accel_power), Random.Range(-accel_power, accel_power));
+            //accel = new Vector2(Random.Range(0f, accel_power), Random.Range(-accel_power, accel_power));
+            accel = new Vector2(0, 0);
             dir = _dir;
 
             height = Camera.main.orthographicSize + 0.5f;
