@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Camera renderCamera;
     [SerializeField]
+    private Camera managerCammera;
+    [SerializeField]
     private TextMeshPro numberMesh;
     public int number { get; private set; }
     [SerializeField]
@@ -424,7 +426,8 @@ public class GameManager : MonoBehaviour
             .OnStart(() =>
             {
                 //Instance.transitionImage.DOFade(0, 0.5f);
-                //Instance.trasitionMask.DOSizeDelta(new Vector2(19200, 10800), 0.5f);                
+                //Instance.trasitionMask.DOSizeDelta(new Vector2(19200, 10800), 0.5f);
+                Instance.renderCamera.enabled = true;
                 Instance.trasitionMask.gameObject.SetActive(true);
                 Instance.trasitionMask.enabled = true;
                 Instance.trasitionMask.transform.DOScale(30, 0.5f).SetEase(Ease.InQuad);
@@ -433,6 +436,8 @@ public class GameManager : MonoBehaviour
             .AppendInterval(0.5f)
             .AppendCallback(() =>
             {
+                Instance.renderCamera.enabled = false;
+                Instance.managerCammera.enabled = false;
                 Instance.trasitionMask.gameObject.SetActive(false);
             });
     }
@@ -448,6 +453,8 @@ public class GameManager : MonoBehaviour
             {
                 //Instance.transitionImage.DOFade(1, 0.5f);
                 //Instance.trasitionMask.DOSizeDelta(new Vector2(1920, 1080), 0.5f);
+                Instance.renderCamera.enabled = true;
+                Instance.managerCammera.enabled = true;
                 Instance.trasitionMask.gameObject.SetActive(true);
                 Instance.trasitionMask.transform.DOScale(1, 0.5f).SetEase(Ease.OutQuad);
                 Instance.transitionImage.transform.DOScale(1, 0.5f).SetEase(Ease.OutQuad);
@@ -455,6 +462,7 @@ public class GameManager : MonoBehaviour
             .AppendInterval(0.6f)//少し遅らせる
             .AppendCallback(() =>
             {
+                Instance.renderCamera.enabled = false;
                 Instance.trasitionMask.gameObject.SetActive(false);
             });
     }
