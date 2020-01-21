@@ -46,11 +46,11 @@ public class FusenScript : MonoBehaviour
         {
             if (Input.GetMouseButton(0) && filled < 102f)
             {
-                filled += 2f;
+                filled += 2f * Time.deltaTime * 60f;
             }
             else if(filled > 1f)
             {
-                filled -= 1f;
+                filled -= 1f * Time.deltaTime * 60f;
             }
             SetProgressValue(filled * 0.01f);
             if(filled <= 10f)
