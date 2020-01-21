@@ -12,6 +12,8 @@ public class Balloon : MonoBehaviour
 
     [SerializeField]
     private GameObject gestureHand;
+    [SerializeField]
+    private GameObject explotion;
 
     float time;
     bool death;
@@ -54,6 +56,7 @@ public class Balloon : MonoBehaviour
     {
         death = true;
         //爆破エフェクトだす
+        Instantiate(explotion, transform.position, transform.rotation);
         Destroy(gameObject);
     }
 }
