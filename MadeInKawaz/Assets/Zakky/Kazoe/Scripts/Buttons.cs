@@ -10,10 +10,14 @@ public class Buttons : MonoBehaviour
     [System.NonSerialized]
     public int buttonNumber;
 
+    NumberButton numberButtonScript;
+
     // Start is called before the first frame update
     void Start()
     {
-        foreach(Transform child in transform)
+        numberButtonScript = numberButton.GetComponent<NumberButton>();
+
+        foreach (Transform child in transform)
         {
             //if (child.name == "Text(TMP)")
             //{
@@ -25,7 +29,7 @@ public class Buttons : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!numberButton.GetComponent<NumberButton>().canPush)
+        if (!numberButtonScript.canPush)
         {
             //Button btn = GetComponent<Button>();
             //btn.interactable = false;
@@ -35,16 +39,16 @@ public class Buttons : MonoBehaviour
 
     public void OnClick()
     {
-        if (numberButton.GetComponent<NumberButton>().canPush)
+        if (numberButtonScript.canPush)
         {
-            if (buttonNumber == numberButton.GetComponent<NumberButton>().correctNumber)
+            if (buttonNumber == numberButtonScript.correctNumber)
             {
                 //ゲームクリア
                 GameManager.Clear();
-                numberButton.GetComponent<NumberButton>().stageClear = true;
+                numberButtonScript.stageClear = true;
             }
             //押せなくする
-            numberButton.GetComponent<NumberButton>().canPush = false;
+            numberButtonScript.canPush = false;
         }
     }
 }
