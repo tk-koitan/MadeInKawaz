@@ -497,6 +497,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1326490540 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4445182215674860578, guid: b1b26f818abc6427e81746d02b7cb4d1,
+    type: 3}
+  m_PrefabInstance: {fileID: 118361643}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1688930345
 GameObject:
   m_ObjectHideFlags: 0
@@ -531,8 +537,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 10
   height: 5
-  gestureHand: {fileID: 4445182215674860578, guid: b1b26f818abc6427e81746d02b7cb4d1,
-    type: 3}
+  gestureHand: {fileID: 1326490540}
+  explotion: {fileID: 100010, guid: e0609132424a24844b1d53ad3d704fd9, type: 3}
 --- !u!212 &1688930347
 SpriteRenderer:
   m_ObjectHideFlags: 0
