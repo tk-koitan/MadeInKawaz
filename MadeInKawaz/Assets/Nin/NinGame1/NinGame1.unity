@@ -132,6 +132,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gesture Hand
       objectReference: {fileID: 0}
+    - target: {fileID: 4445182215674860578, guid: b1b26f818abc6427e81746d02b7cb4d1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4445182215674860576, guid: b1b26f818abc6427e81746d02b7cb4d1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -187,16 +192,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4445182215674860579, guid: b1b26f818abc6427e81746d02b7cb4d1,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: d6d944a4b7dac4a83bc83bba233818e4, type: 2}
-    - target: {fileID: 4445182215689491644, guid: b1b26f818abc6427e81746d02b7cb4d1,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4445182215689491645, guid: b1b26f818abc6427e81746d02b7cb4d1,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -262,10 +257,20 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4445182215674860579, guid: b1b26f818abc6427e81746d02b7cb4d1,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: d6d944a4b7dac4a83bc83bba233818e4, type: 2}
     - target: {fileID: 8879870478293590411, guid: b1b26f818abc6427e81746d02b7cb4d1,
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4445182215689491644, guid: b1b26f818abc6427e81746d02b7cb4d1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1b26f818abc6427e81746d02b7cb4d1, type: 3}

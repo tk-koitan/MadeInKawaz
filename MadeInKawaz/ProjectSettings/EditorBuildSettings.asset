@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Main/Scenes/ManagerScene.unity
     guid: 266aceaa3cdef4be0a5a909ae9f5233c
   - enabled: 1
-    path: Assets/Nin/NinGame1.unity
+    path: Assets/Nin/NinGame1/NinGame1.unity
     guid: aab4d58e3f5a3404f810a230a9dc0851
   - enabled: 1
     path: Assets/Koitan/G/Scenes/G.unity
@@ -33,9 +33,15 @@ EditorBuildSettings:
     path: Assets/Zakky/Kazoe/Scenes/Kazoe.unity
     guid: 07b9c23ed9cb4cc419d061b3e88048ef
   - enabled: 1
+    path: Assets/Zakky/Hasamare/Scenes/Hasamare.unity
+    guid: 1b69a9e7d6b3d2148b093259b5325134
+  - enabled: 1
     path: Assets/SampleGame/Scenes/SampleGame.unity
     guid: 1fbd8adeb374745cda331bcc444738e4
   - enabled: 1
     path: Assets/Main/Scenes/Library.unity
     guid: f4f02f184010241978e9a8b3a179e03f
+  - enabled: 1
+    path: Assets/Nin/NinGame2/NinGame2.unity
+    guid: f183f0f1037d7944ba833abcd404c729
   m_configObjects: {}
