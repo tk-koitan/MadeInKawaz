@@ -9,6 +9,8 @@ namespace Hitode
         [SerializeField] GameObject hitodePrefab;
         [SerializeField] Sprite[] hitodeSprites;
 
+        Pool pool;
+
         float screenW, screenH;
 
         float timer;
@@ -19,6 +21,9 @@ namespace Hitode
             screenH = Camera.main.orthographicSize + 0.5f;
             screenW = screenH * Camera.main.aspect + 0.5f;
             timer = 0.0f;
+
+            pool = gameObject.GetComponent<Pool>();
+
             //for(int i = 0; i < 10; ++i)
             //{
             //    Generate();
@@ -38,11 +43,11 @@ namespace Hitode
 
         void Generate()
         {
-            Vector3 generatePos = new Vector3(Random.Range(-2.0f, screenW + 3.0f), screenH + 2.0f);
+            Vector3 generatePos = new Vector3(Random.Range(0.0f, screenW + 4.0f), screenH + 2.0f);
             Vector3 dir = new Vector3(Random.Range(-1.0f, -0.5f), -1.0f);
-            GameObject newHitode = Instantiate(hitodePrefab, transform.position, Quaternion.identity);
+            GameObject newHitode = pool.GetInstance();
             newHitode.GetComponent<SpriteRenderer>().sprite = hitodeSprites[Random.Range(0, hitodeSprites.Length)];
-            newHitode.GetComponent<HitodeContoroller>().Initialize(generatePos, dir, 7.0f);
+            newHitode.GetComponent<HitodeContoroller>().Initialize(generatePos, dir, 30.0f);
         }
     }
 }

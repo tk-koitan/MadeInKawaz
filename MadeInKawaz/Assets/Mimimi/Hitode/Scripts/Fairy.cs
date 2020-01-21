@@ -13,10 +13,13 @@ namespace Hitode
         // プレイヤーの位置
         [SerializeField] float playerHeight;
 
+        //
+        Rigidbody2D rb;
+
         // Start is called before the first frame update
         void Start()
         {
-
+            rb = gameObject.GetComponent<Rigidbody2D>();
         }
 
         // Update is called once per frame
@@ -32,6 +35,8 @@ namespace Hitode
 
             if(Input.GetMouseButton(0))
             {
+                //Vector3 moveDir = mousePos - prevPos;
+                //rb.velocity = moveDir * Time.deltaTime * 100.0f;
                 transform.Translate(mousePos - prevPos);
 
                 transform.position = new Vector3(Mathf.Clamp(transform.position.x, -width - 2.0f, width), playerHeight);
