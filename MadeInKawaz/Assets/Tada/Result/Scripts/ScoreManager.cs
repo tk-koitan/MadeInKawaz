@@ -188,9 +188,14 @@ public class ScoreManager : MonoBehaviour
     private const string kGotyamaze = "all";
 
     // ゲームのシーン名とゲームIDを対応させる
-    private Dictionary<string, int> dic_;
-#endregion
+    private Dictionary<string, int> dic_to_id_;
+    // ゲームのシーン名とゲームのタイトル名を対応させる
+    private Dictionary<string, string> dic_to_name_;
+    #endregion
+
     // 登録された最新のゲームシーン名
+    public string LatestGameScene { private set; get; }
+    // 登録された最新のゲームタイトル名
     public string LatestGame { private set; get; }
     // 登録された最新のスコアの順位
     public int LatestRank { private set; get; }
@@ -200,10 +205,12 @@ public class ScoreManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            dic_ = new Dictionary<string, int>();
+            dic_to_id_ = new Dictionary<string, int>();
+            dic_to_name_ = new Dictionary<string, string>();
             data_ = new ScoreData();
             data_.Init(game_set_.games.Length + 1, display_rank_length_);
-            LatestGame = kGotyamaze;
+            LatestGameScene = kGotyamaze;
+            LatestGame = "ごちゃまぜ";
             LatestRank = -1;
             AssouciateGame();
             DontDestroyOnLoad(this);
@@ -214,25 +221,29 @@ public class ScoreManager : MonoBehaviour
     // スコアを取得する 引数は @game_scene_name=ゲームのシーン名
     public Score GetScoreData(string game_scene_name = kGotyamaze)
     {
-        return data_.GetScoreData(dic_[game_scene_name]);
+        return data_.GetScoreData(dic_to_id_[game_scene_name]);
     }
 
     // スコアを登録する ランクを返す(ランク外の場合は-1) 引数は @score=得点，@game_scene_name=ゲームのシーン名
     public int RegisterScore(int score, string game_scene_name = kGotyamaze)
     {
-        LatestGame = game_scene_name;
-        LatestRank = data_.RegisterScore(score, dic_[game_scene_name]);
+        LatestGameScene = game_scene_name;
+        LatestGame = dic_to_name_[game_scene_name];
+        LatestRank = data_.RegisterScore(score, dic_to_id_[game_scene_name]);
         return LatestRank;
     }
 
     private void AssouciateGame()
     {
         // all(ごちゃまぜは0にする)
-        dic_.Add(kGotyamaze, 0);
-        
+        dic_to_id_.Add(kGotyamaze, 0);
+        dic_to_name_.Add(kGotyamaze, "ごちゃまぜ");
+
         for(int i = 0; i < game_set_.games.Length; ++i)
         {
-            dic_.Add(game_set_.games[i].sceneName, i + 1);
+            dic_to_id_.Add(game_set_.games[i].sceneName, i + 1);
+            dic_to_name_.Add(game_set_.games[i].sceneName, game_set_.games[i].titleName);
         }
+
     }
 }
