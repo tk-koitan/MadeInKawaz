@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     private TextMeshProUGUI highScoreMesh;
     [SerializeField]
     private string sceneName;
-    private AsyncOperation async;
+    private AsyncOperation async = new AsyncOperation();
     private Scene gameScene;
     [SerializeField]
     private RawImage transitionImage;
@@ -79,6 +79,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
 
+
 #if UNITY_EDITOR
         isTestPlay = EditorPrefs.GetBool("testPlayFlag", false);
         if (isTestPlay)
@@ -110,7 +111,7 @@ public class GameManager : MonoBehaviour
         else
         {
             //IsGamePlaying = true;
-            //mode = PlayMode.None;
+            //mode = PlayMode.None;            
         }
 
         if (mode != PlayMode.None)
@@ -127,6 +128,7 @@ public class GameManager : MonoBehaviour
         //DebugTextManager.Display(() => "IsGamePlaying:" + IsGamePlaying.ToString() + "\n");
         DebugTextManager.Display(() => "mode:" + mode.ToString() + "\n");
         DebugTextManager.Display(() => "gameType:" + currentGameType.ToString() + "\n");
+        //DebugTextManager.Display(() => "Loading:" + (async.progress * 100).ToString("D3") + "%\n");        
     }
 
     // Update is called once per frame
@@ -135,6 +137,7 @@ public class GameManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && isCanPause && !isPause && mode != PlayMode.None)
         {
             Pause();
+            MusicManager.Stop();
         }
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -180,6 +183,7 @@ public class GameManager : MonoBehaviour
             .OnStart(() =>
             {
                 FinishFlag = false;
+                MusicManager.Play(BgmCode.Start);
                 backgrondAnim.Play("Start", 0, 0);
                 for (int i = 0; i < restNum; i++)
                 {
@@ -199,6 +203,7 @@ public class GameManager : MonoBehaviour
             .AppendInterval(1f)
             .AppendCallback(() =>
             {
+                MusicManager.Play(BgmCode.Ready);
                 backgrondAnim.Play("Ready");
                 foreach (Animator anim in coinAnims)
                 {
@@ -256,7 +261,7 @@ public class GameManager : MonoBehaviour
             .AppendInterval(1f)
             .AppendCallback(() =>
             {
-                ShowStatement();
+                ShowStatement();                
                 isCanPause = false;
                 //シーンを非同期で読み込み
                 gameScene = SceneManager.GetSceneByName(sceneName);
@@ -264,9 +269,15 @@ public class GameManager : MonoBehaviour
                 {
                     async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
                     async.allowSceneActivation = false;
+                    //DebugTextManager.Display(() => "Loading:" + (async.progress * 100).ToString() + "%\n");
                 }
             })
-            .AppendInterval(0.25f)
+            .AppendInterval(0.15f)
+            .AppendCallback(() =>
+            {
+                MusicManager.FadeOut(0.1f);
+            })
+            .AppendInterval(0.1f)
             .AppendCallback(() =>
             {
                 TimeCountManager.CountDownStart(waitTime);
@@ -290,10 +301,10 @@ public class GameManager : MonoBehaviour
                 ClearActionQueue.Clear();
                 CameraZoomOut();
                 IsGamePlaying = false;
+                MusicManager.audioSource.volume = 1f;
                 if (ClearFlag)
                 {
-                    MusicManager.audioSource.pitch = Time.timeScale;
-                    MusicManager.Play(0);
+                    MusicManager.Play(BgmCode.Success);
                     backgrondAnim.Play("Clear");
                     for (int i = 0; i < restNum; i++)
                     {
@@ -302,6 +313,7 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
+                    MusicManager.Play(BgmCode.Failure);
                     backgrondAnim.Play("Failure");
                     /*
                     for (int i = 0; i < restNum; i++)
@@ -369,11 +381,13 @@ public class GameManager : MonoBehaviour
                     Finish();
                 }
                 else
-                {
+                {                                   
                     backgrondAnim.Play("Ready");
                     number++;
                     numberMesh.text = number.ToString();
                     Time.timeScale += 0.1f;
+                    MusicManager.audioSource.volume = 1f;
+                    MusicManager.Play(BgmCode.Ready);
                     StartGame();
                 }
             });
@@ -534,6 +548,7 @@ public class GameManager : MonoBehaviour
         isPause = false;
         Time.timeScale = timeScale;
         pauseUi.SetActive(false);
+        MusicManager.Resume();
     }
 
     public void ReturnTitle()
@@ -583,6 +598,7 @@ public class GameManager : MonoBehaviour
                 });
     }
 
+    /*
     public static void TrasitionScene(string fromScene, string toScene, float time = 0.5f)
     {
         Instance.StartCoroutine(Instance.ScreenShot(fromScene, toScene, time));
@@ -624,6 +640,7 @@ public class GameManager : MonoBehaviour
         // 保存
         //File.WriteAllBytes(Application.dataPath + "/" + dateStr + ".png", bytes);
     }
+    */
 
     public enum PlayMode
     {
