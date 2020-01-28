@@ -37,13 +37,13 @@ namespace Result
 
             StartCoroutine(NamaeOmoitukan(2.0f));
 
-            Display(ScoreManager.Instance.LatestGame, ScoreManager.Instance.LatestRank);
+            Display(score_manager_.LatestGameScene, score_manager_.LatestGame, score_manager_.LatestRank);
         }
 
-        private void Display(string game_scene_name, int rank = -1)
+        private void Display(string game_scene_name, string game_name, int rank = -1)
         {
             string res = "";
-            res += game_scene_name;
+            res += game_name;
             res += "\nスコアランキング\n";
             Score score = score_manager_.GetScoreData(game_scene_name);
             for (int i = 0, n = score.Scores.Count; i < n; ++i)
