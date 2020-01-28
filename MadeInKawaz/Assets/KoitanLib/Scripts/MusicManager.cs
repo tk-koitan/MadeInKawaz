@@ -19,7 +19,7 @@ public class MusicManager : MonoBehaviour
     private float playPos = 0f;
     public bool isIntro = false;
     public int index = 0;
-    public bool isloop;    
+    public bool isloop;
 
     private void Awake()
     {
@@ -85,7 +85,7 @@ public class MusicManager : MonoBehaviour
     {
         instance.isIntro = true;
         Instance.playPos = audioSource.time;
-        audioSource.Stop();        
+        audioSource.Stop();
     }
 
     public static void Resume()
@@ -112,5 +112,6 @@ public enum BgmCode
     Success = 0,
     Failure = 1,
     Ready = 2,
-    Start = 3
+    Start = 3,
+    SpeedUp = 4
 }

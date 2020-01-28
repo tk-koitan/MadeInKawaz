@@ -21,6 +21,7 @@ public class DebugNotificationGenerator : MonoBehaviour
     void Start()
     {
         textMesh = textBox.GetComponentInChildren<TextMeshProUGUI>();
+        textBox.SetActive(false);
         //DebugTextManager.Display(() => "NotificationQueueCount:" + nQueue.Count.ToString() + "\n");
     }
 
@@ -35,17 +36,19 @@ public class DebugNotificationGenerator : MonoBehaviour
             textMesh.text = e.message();
             ms = e.message;
             Sequence seq = DOTween.Sequence()
+                .OnStart(() => textBox.SetActive(true))
                 .Append(textBox.transform.DOLocalMoveX(-600, 0.3f).SetRelative().SetEase(Ease.OutCubic))
                 .AppendInterval(e.duration)
                 .Append(textBox.transform.DOLocalMoveX(600, 0.3f).SetRelative().SetEase(Ease.InCubic))
                 .OnComplete(() =>
                 {
                     isOpen = false;
+                    textBox.SetActive(false);
                 });
             //textBox.transform.DOMoveX(-400,)
         }
 
-        if(isOpen)
+        if (isOpen)
         {
             textMesh.text = ms?.Invoke();
         }

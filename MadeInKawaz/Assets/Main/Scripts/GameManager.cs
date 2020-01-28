@@ -59,6 +59,9 @@ public class GameManager : MonoBehaviour
     public static bool IsGamePlaying { get; private set; }
     private static Queue<int> gameQueue = new Queue<int>();
     public Texture2D tex;
+    [SerializeField]
+    private int speedUpIntervalCount = 1;
+    private int intervalCount = 0;
 
     private void Awake()
     {
@@ -79,6 +82,11 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
 
+#if UNITY_EDITOR
+        DebugNotificationGenerator.Notify("Qキーでデバッグ表示ON/OFF");
+#else
+        DebugNotificationGenerator.Notify("４本マルチタッチでデバッグ表示ON/OFF");
+#endif
 
 #if UNITY_EDITOR
         isTestPlay = EditorPrefs.GetBool("testPlayFlag", false);
@@ -261,7 +269,7 @@ public class GameManager : MonoBehaviour
             .AppendInterval(1f)
             .AppendCallback(() =>
             {
-                ShowStatement();                
+                ShowStatement();
                 isCanPause = false;
                 //シーンを非同期で読み込み
                 gameScene = SceneManager.GetSceneByName(sceneName);
@@ -381,7 +389,8 @@ public class GameManager : MonoBehaviour
                     Finish();
                 }
                 else
-                {                                   
+                {
+                    
                     backgrondAnim.Play("Ready");
                     number++;
                     numberMesh.text = number.ToString();
@@ -389,7 +398,37 @@ public class GameManager : MonoBehaviour
                     MusicManager.audioSource.volume = 1f;
                     MusicManager.Play(BgmCode.Ready);
                     StartGame();
+                    
+                    //SpeedUp();
                 }
+            });
+    }
+
+    private void SpeedUp()
+    {
+        Sequence seq = DOTween.Sequence()
+            .OnStart(() =>
+            {
+                backgrondAnim.Play("SpeedUp");
+                isCanPause = false;
+                MusicManager.audioSource.DOPitch(Time.timeScale + 0.1f, 4);
+                MusicManager.Play(BgmCode.SpeedUp);
+                DOTween.To(
+                    () => Time.timeScale,
+                    num => Time.timeScale = num,
+                    0.1f,
+                    4.0f
+                ).SetEase(Ease.Linear).SetRelative();
+            })
+            .AppendInterval(4f)
+            .AppendCallback(() =>
+            {
+                backgrondAnim.Play("Ready");
+                number++;
+                numberMesh.text = number.ToString();
+                MusicManager.audioSource.volume = 1f;
+                MusicManager.Play(BgmCode.Ready);
+                StartGame();
             });
     }
 
