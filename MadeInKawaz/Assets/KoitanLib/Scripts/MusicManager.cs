@@ -13,8 +13,10 @@ public class MusicManager : MonoBehaviour
 
     public static AudioSource audioSource;
     public BGMSource[] bgm;
+    public AudioClip[] bgms;
     public float startTime, endTime;
     private float currentTime;
+    private float playPos = 0f;
     public bool isIntro = false;
     public int index = 0;
     public bool isloop;
@@ -34,7 +36,8 @@ public class MusicManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isloop)
+        /*
+        if (isloop)
         {
             if (audioSource.time >= startTime)
             {
@@ -50,12 +53,14 @@ public class MusicManager : MonoBehaviour
                 audioSource.time = startTime;
                 audioSource.Play();
             }
-        }        
+        }
+        */
         //Debug.Log(audioSource.time);
     }
 
     public static void Play(int _index)
     {
+        /*
         instance.startTime = instance.bgm[_index].startTime;
         instance.endTime = instance.bgm[_index].endTime;
         audioSource.clip = instance.bgm[_index].BGM;
@@ -64,6 +69,11 @@ public class MusicManager : MonoBehaviour
         instance.isIntro = true;
         instance.index = _index;
         instance.isloop = instance.bgm[_index].isLoop;
+        */
+        audioSource.clip = Instance.bgms[_index];
+        audioSource.pitch = Time.timeScale;
+        audioSource.Play();
+        audioSource.time = 0f;
     }
 
     public static void Play(BgmCode bgmCode)
@@ -74,6 +84,7 @@ public class MusicManager : MonoBehaviour
     public static void Stop()
     {
         instance.isIntro = true;
+        Instance.playPos = audioSource.time;
         audioSource.Stop();
     }
 
@@ -81,6 +92,8 @@ public class MusicManager : MonoBehaviour
     {
         instance.isIntro = true;
         audioSource.Play();
+        audioSource.time = Instance.playPos;
+        Instance.playPos = 0f;
     }
 
     public static void FadeIn(float duration)
@@ -96,8 +109,9 @@ public class MusicManager : MonoBehaviour
 
 public enum BgmCode
 {
-    CupBattle = 0,
-    CupTitle = 1,
-    CupClear = 2,
-    CupResult = 3
+    Success = 0,
+    Failure = 1,
+    Ready = 2,
+    Start = 3,
+    SpeedUp = 4
 }
