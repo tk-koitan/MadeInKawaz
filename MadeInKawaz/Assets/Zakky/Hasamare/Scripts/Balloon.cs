@@ -49,7 +49,7 @@ public class Balloon : MonoBehaviour
             oldPos = mousePos;
         }
         time += Time.deltaTime;
-        if (time > 3.8 && !death) GameManager.Clear();
+        if (time > 7.8f && !death) GameManager.Clear();
     }
 
     void OnTriggerEnter2D(Collider2D col)
