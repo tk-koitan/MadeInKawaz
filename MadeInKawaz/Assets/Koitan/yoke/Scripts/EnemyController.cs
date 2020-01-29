@@ -24,6 +24,9 @@ namespace yoke
 
         private Pool pool;
 
+        //by koitan
+        private AudioSource audioSource;
+
 
         private float dir = -1f;
 
@@ -31,6 +34,7 @@ namespace yoke
         void Start()
         {
             pool = GetComponent<Pool>();
+            audioSource = GetComponent<AudioSource>();
 
             moveSpeed = Random.Range(moveSpeedRange.x, moveSpeedRange.y);
             StartCoroutine(BulletShot(n_way, dir_diff, interval));
@@ -50,6 +54,7 @@ namespace yoke
                 yield return new WaitForSeconds(interval);
                 // n way shot
                 //++n;
+                audioSource.Play();
                 for (int i = -n / 2; i <= n / 2; ++i)
                 {
                     GameObject bulletObj = pool.GetInstance();

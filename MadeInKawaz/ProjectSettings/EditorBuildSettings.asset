@@ -47,4 +47,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Mimimi/Hitode/Hitode.unity
     guid: 33d0d417123d00443ae41bb5eb9ca4d5
+  - enabled: 1
+    path: Assets/Koitan/EndlessPaperCup/Scenes/EndlessPaperCup.unity
+    guid: af42703da5d5949a79e441e97b0d0575
   m_configObjects: {}

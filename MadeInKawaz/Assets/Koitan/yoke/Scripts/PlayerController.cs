@@ -18,6 +18,10 @@ namespace yoke
         // クリアフラグ
         private float timer;
 
+        //by koitan
+        [SerializeField]
+        private GameObject burstObj;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -58,6 +62,7 @@ namespace yoke
 
         private void OnTriggerEnter2D(Collider2D collider)
         {
+            Instantiate(burstObj, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }
     }

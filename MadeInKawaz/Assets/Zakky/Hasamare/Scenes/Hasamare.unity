@@ -538,7 +538,7 @@ MonoBehaviour:
   width: 10
   height: 5
   gestureHand: {fileID: 1326490540}
-  explotion: {fileID: 100010, guid: e0609132424a24844b1d53ad3d704fd9, type: 3}
+  explotion: {fileID: 100010, guid: 3f68813a682ba411ab6cc7a560661761, type: 3}
 --- !u!212 &1688930347
 SpriteRenderer:
   m_ObjectHideFlags: 0

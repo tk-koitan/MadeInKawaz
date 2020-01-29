@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdb1034ebb819460397b1bf6f8150383, type: 3}
+  m_Name: EndlessPaperCup
+  m_EditorClassIdentifier: 
+  sceneName: EndlessPaperCup
+  titleName: "\u30A8\u30F3\u30C9\u30EC\u30B9\u7D19\u30B3\u30C3\u30D7"
+  authorName: koitan
+  developerName: Kawaz
+  statement: "\u3088\u304F\u307F\u3066\uFF01"
+  explanation: "\u3088\u304F\u898B\u3088\u3046\uFF01\n(Unity\uFF11\u9031\u9593\u30B2\u30FC\u30E0\u30B8\u30E3\u30E0\u306E\u79FB\u690D\u4F5C\u54C1)"
+  gameType: 1
+  iconImage: {fileID: -3766794121152321694, guid: 758c321747d454066a1f4e7b5adb0aa3,
+    type: 3}
+  screenshotImage: {fileID: 0}

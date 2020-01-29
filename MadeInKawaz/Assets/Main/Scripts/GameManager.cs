@@ -170,7 +170,10 @@ public class GameManager : MonoBehaviour
     [ContextMenu("Initialization")]
     public void Initialization()
     {
-        Time.timeScale = 1;
+        if (!isTestPlay)
+        {
+            Time.timeScale = 1;
+        }
         number = 1;
         restNum = 4;
         numberMesh.text = number.ToString();
@@ -390,7 +393,7 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    
+
                     backgrondAnim.Play("Ready");
                     number++;
                     numberMesh.text = number.ToString();
@@ -398,7 +401,7 @@ public class GameManager : MonoBehaviour
                     MusicManager.audioSource.volume = 1f;
                     MusicManager.Play(BgmCode.Ready);
                     StartGame();
-                    
+
                     //SpeedUp();
                 }
             });
