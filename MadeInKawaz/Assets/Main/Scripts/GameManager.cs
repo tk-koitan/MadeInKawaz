@@ -7,6 +7,7 @@ using DG.Tweening;
 using UnityEngine.SceneManagement;
 using System.Linq;
 using UnityEngine.UI;
+using UnityEngine.Advertisements;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -135,9 +136,10 @@ public class GameManager : MonoBehaviour
         //DebugTextManager.Display(() => "progress:" + async.progress + "\n");
         //DebugTextManager.Display(() => "IsGamePlaying:" + IsGamePlaying.ToString() + "\n");
         DebugTextManager.Display(() => "mode:" + mode.ToString() + "\n");
-        DebugTextManager.Display(() => "gameType:" + currentGameType.ToString() + "\n");
+        //DebugTextManager.Display(() => "gameType:" + currentGameType.ToString() + "\n");
         //DebugTextManager.Display(() => "Loading:" + (async.progress * 100).ToString("D3") + "%\n");
-        DebugTextManager.Display(() => "Aspect:" + managerCamera.aspect + "\n");
+        //DebugTextManager.Display(() => "Aspect:" + managerCamera.aspect + "\n");
+        DebugTextManager.Display(() => "AdsIsReady:" + Advertisement.IsReady() + "\n");
         //managerCammera.DOAspect(1, 5);
         //managerCammera.aspect = 16f / 9f;
         //カメラをアス比に合わせる設定
@@ -187,7 +189,7 @@ public class GameManager : MonoBehaviour
         numberMesh.gameObject.SetActive(false);
         gameQueue.Clear();
         ClearFlag = false;
-        numberMesh.transform.localScale = Vector3.one;        
+        numberMesh.transform.localScale = Vector3.one;
         if (isTestPlay)
         {
             currentGame = LoadGamePackage();
@@ -195,7 +197,7 @@ public class GameManager : MonoBehaviour
             SceneManager.UnloadSceneAsync(currentGame.sceneName);
         }
         currentGame = LoadGamePackage();
-        if(mode==PlayMode.Normal)
+        if (mode == PlayMode.Normal)
         {
             highScoreMesh.text = "ハイスコア：" + System.String.Format("{0, 3}", ScoreManager.Instance.GetScoreData().Scores[0].ToString());
         }
@@ -480,6 +482,9 @@ public class GameManager : MonoBehaviour
 
                 // データをセーブする
                 TadaLib.Save.SaveManager.Instance.Save();
+
+                //広告を呼び出す
+                ShowAd();
             });
     }
 
@@ -627,6 +632,8 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadSceneAsync("Title", LoadSceneMode.Additive);
     }
 
+
+
     public static void ScreenTrasition(string fromScene, string toScene, float time = 0.5f)
     {
         Scene scene;
@@ -706,6 +713,15 @@ public class GameManager : MonoBehaviour
         //File.WriteAllBytes(Application.dataPath + "/" + dateStr + ".png", bytes);
     }
     */
+
+    //広告
+    public void ShowAd()
+    {
+        if (Advertisement.IsReady())
+        {
+            Advertisement.Show();
+        }
+    }
 
     public enum PlayMode
     {
