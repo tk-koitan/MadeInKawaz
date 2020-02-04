@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Camera renderCamera;
     [SerializeField]
-    private Camera managerCammera;
+    private Camera managerCamera;
     [SerializeField]
     private TextMeshPro numberMesh;
     public int number { get; private set; }
@@ -44,8 +44,8 @@ public class GameManager : MonoBehaviour
     private GamePackage currentGame;
     private GameType currentGameType;
     private bool isTestPlay = false;
-    private bool isPause;
-    private bool isCanPause;
+    public bool isPause;
+    public bool isCanPause;
     public static PlayMode mode { get; set; } = PlayMode.None;
     public GamePackage singleGame;
     [SerializeField]
@@ -136,17 +136,24 @@ public class GameManager : MonoBehaviour
         //DebugTextManager.Display(() => "IsGamePlaying:" + IsGamePlaying.ToString() + "\n");
         DebugTextManager.Display(() => "mode:" + mode.ToString() + "\n");
         DebugTextManager.Display(() => "gameType:" + currentGameType.ToString() + "\n");
-        //DebugTextManager.Display(() => "Loading:" + (async.progress * 100).ToString("D3") + "%\n");        
+        //DebugTextManager.Display(() => "Loading:" + (async.progress * 100).ToString("D3") + "%\n");
+        DebugTextManager.Display(() => "Aspect:" + managerCamera.aspect + "\n");
+        //managerCammera.DOAspect(1, 5);
+        //managerCammera.aspect = 16f / 9f;
+        //カメラをアス比に合わせる設定
+        //managerCamera.orthographicSize *= 16f / 9f / managerCamera.aspect;
     }
 
     // Update is called once per frame
     void Update()
     {
+        /*
         if (Input.GetMouseButtonDown(0) && isCanPause && !isPause && mode != PlayMode.None)
         {
             Pause();
             MusicManager.Stop();
         }
+        */
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
@@ -180,8 +187,7 @@ public class GameManager : MonoBehaviour
         numberMesh.gameObject.SetActive(false);
         gameQueue.Clear();
         ClearFlag = false;
-        numberMesh.transform.localScale = Vector3.one;
-        highScoreMesh.text = "ハイスコア：" + System.String.Format("{0, 3}", ScoreManager.Instance.GetScoreData().Scores[0].ToString());
+        numberMesh.transform.localScale = Vector3.one;        
         if (isTestPlay)
         {
             currentGame = LoadGamePackage();
@@ -189,6 +195,14 @@ public class GameManager : MonoBehaviour
             SceneManager.UnloadSceneAsync(currentGame.sceneName);
         }
         currentGame = LoadGamePackage();
+        if(mode==PlayMode.Normal)
+        {
+            highScoreMesh.text = "ハイスコア：" + System.String.Format("{0, 3}", ScoreManager.Instance.GetScoreData().Scores[0].ToString());
+        }
+        else
+        {
+            highScoreMesh.text = "ハイスコア：" + System.String.Format("{0, 3}", ScoreManager.Instance.GetScoreData(currentGame.sceneName).Scores[0].ToString());
+        }
 
         Sequence seq = DOTween.Sequence()
             .OnStart(() =>
@@ -296,7 +310,15 @@ public class GameManager : MonoBehaviour
                 Instance.async.allowSceneActivation = true;
                 IsGamePlaying = true;
             })
-            .AppendInterval(waitTime)
+            .AppendInterval(0.05f)
+            .AppendCallback(() =>
+            {
+                /*
+                Debug.Log(Camera.main.orthographicSize);
+                Camera.main.DOOrthoSize(Camera.main.orthographicSize * 16f / 9f / managerCamera.aspect, 0.05f);
+                */
+            })
+            .AppendInterval(waitTime - 0.05f)
             .OnComplete(() =>
             {
                 EndGame();
@@ -493,7 +515,7 @@ public class GameManager : MonoBehaviour
             .AppendCallback(() =>
             {
                 Instance.renderCamera.enabled = false;
-                Instance.managerCammera.enabled = false;
+                Instance.managerCamera.enabled = false;
                 Instance.trasitionMask.gameObject.SetActive(false);
             });
     }
@@ -510,7 +532,7 @@ public class GameManager : MonoBehaviour
                 //Instance.transitionImage.DOFade(1, 0.5f);
                 //Instance.trasitionMask.DOSizeDelta(new Vector2(1920, 1080), 0.5f);
                 Instance.renderCamera.enabled = true;
-                Instance.managerCammera.enabled = true;
+                Instance.managerCamera.enabled = true;
                 Instance.trasitionMask.gameObject.SetActive(true);
                 Instance.trasitionMask.transform.DOScale(1, 0.5f).SetEase(Ease.OutQuad);
                 Instance.transitionImage.transform.DOScale(1, 0.5f).SetEase(Ease.OutQuad);
@@ -583,6 +605,7 @@ public class GameManager : MonoBehaviour
         timeScale = Time.timeScale;
         Time.timeScale = 0;
         pauseUi.SetActive(true);
+        MusicManager.Stop();
     }
 
     public void Resume()
