@@ -66,7 +66,7 @@ namespace TadaLib
             // データを全削除する 保存ディレクトリがDataフォルダとは限らないので非常によくない
             public void DeleteAllData()
             {
-                string path = Application.persistentDataPath + "/" + "Data";
+                string path = Application.persistentDataPath + "/Documents/Data";
                 Delete(path);
                 Debug.Log("セーブデータを全削除しました");
             }

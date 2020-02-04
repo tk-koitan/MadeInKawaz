@@ -109,7 +109,11 @@ public class ScoreData : BaseSaver<ScoreData>
     public void Init(int game_num, int display_rank_length)
     {
         ScoreData data = Load(kFileName);
-        if (data == null) scores_ = new List<Score>();
+        if (data == null)
+        {
+            scores_ = new List<Score>();
+            Debug.Log("データ読み込み失敗");
+        }
         else scores_ = data.Scores;
 
         rank_length_ = display_rank_length;
@@ -231,6 +235,12 @@ public class ScoreManager : MonoBehaviour
         LatestGame = dic_to_name_[game_scene_name];
         LatestRank = data_.RegisterScore(score, dic_to_id_[game_scene_name]);
         return LatestRank;
+    }
+
+    // スコアデータをリロードする
+    public void Reload()
+    {
+        data_.Init(game_set_.games.Length + 1, display_rank_length_);
     }
 
     private void AssouciateGame()

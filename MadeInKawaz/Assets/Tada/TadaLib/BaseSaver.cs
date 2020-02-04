@@ -22,7 +22,7 @@ namespace TadaLib
             protected bool isSaving = false;
 
             // 保存するディレクトリ
-            protected static string DIRECTORY_NAME = "Data";
+            protected static string DIRECTORY_NAME = "Documents/Data";
 
             // セーブ申請を出してからセーブが完了されたかどうか 派生クラスで使う
             protected bool save_completed_ = true;
