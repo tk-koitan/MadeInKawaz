@@ -34,9 +34,9 @@ namespace TadaGame1
         private SpriteRenderer background_;
         // 当たった時の背景とはずれの時の背景
         [SerializeField]
-        private Sprite clear_background_;
+        private Color clear_background_;
         [SerializeField]
-        private Sprite failed_background_;
+        private Color failed_background_;
         #endregion
 
         // Start is called before the first frame update
@@ -101,7 +101,7 @@ namespace TadaGame1
                 {
                     items_[i].DoAnimate(true);
                 }
-                background_.sprite = clear_background_;
+                background_.color = clear_background_;
                 answer_.DOColor(new Color(1.0f, 1.0f, 1.0f, 1.0f), 1.0f);
             }
             else
@@ -111,7 +111,7 @@ namespace TadaGame1
                 {
                     items_[i].DoAnimate(false);
                 }
-                background_.sprite = failed_background_;
+                background_.color = failed_background_;
             }
         }
     }

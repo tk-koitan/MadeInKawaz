@@ -333,8 +333,8 @@ MonoBehaviour:
   - {fileID: 1748847631}
   answer_: {fileID: 2053930001}
   background_: {fileID: 375901080}
-  clear_background_: {fileID: 21300000, guid: ac8dc80548a51314c80129af0b9cafdf, type: 3}
-  failed_background_: {fileID: 21300000, guid: a7395324ab3831940b425ffe90fd22e8, type: 3}
+  clear_background_: {r: 1, g: 0.9757196, b: 0, a: 1}
+  failed_background_: {r: 0.24919897, g: 0.48876506, b: 0.9433962, a: 1}
 --- !u!4 &284233781
 Transform:
   m_ObjectHideFlags: 0
