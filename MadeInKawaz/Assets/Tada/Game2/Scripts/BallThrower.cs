@@ -68,6 +68,8 @@ namespace TadaGame2
 
             if (Input.GetMouseButtonDown(0))
             {
+                AudioSource audio = GetComponent<AudioSource>();
+                audio.Play();
                 is_throwed_ = true;
                 // ボールを飛ばす
                 EnDisableArrow();

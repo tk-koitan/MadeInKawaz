@@ -66,6 +66,9 @@ namespace TadaGame2
                 finish_obj_.transform.position = finish_move_pos_;
                 finish_obj_.transform.DOMoveX(0f, move_duration_ / 2f).SetEase(Ease.OutQuart).OnComplete(() =>
                 finish_obj_.transform.DOMoveX(-finish_move_pos_.x, move_duration_ / 2f).SetEase(Ease.InQuart));
+
+                AudioSource audio = GetComponent<AudioSource>();
+                audio.Play();
             }
         }
     }

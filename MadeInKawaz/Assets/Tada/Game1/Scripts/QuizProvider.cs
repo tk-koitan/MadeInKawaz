@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using TadaGame1;
+using DG.Tweening;
 
 /// <summary>
 /// 同じ絵を当てるクイズの内容を決めるクラス
@@ -101,6 +102,7 @@ namespace TadaGame1
                     items_[i].DoAnimate(true);
                 }
                 background_.sprite = clear_background_;
+                answer_.DOColor(new Color(1.0f, 1.0f, 1.0f, 1.0f), 1.0f);
             }
             else
             {
