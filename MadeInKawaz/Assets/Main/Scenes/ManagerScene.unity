@@ -2202,7 +2202,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a2565154555c7426d9e27b199fd36c77, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dab86f5d98b95e54f9aef07a7eba1838, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3004,7 +3004,7 @@ MonoBehaviour:
   textMesh: {fileID: 1339122236}
   bombImg: {fileID: 1065330310}
   bombSprs:
-  - {fileID: 21300000, guid: a2565154555c7426d9e27b199fd36c77, type: 3}
+  - {fileID: 21300000, guid: dab86f5d98b95e54f9aef07a7eba1838, type: 3}
   - {fileID: 21300000, guid: 3fad6414ceca14ffbae60885d3b975fb, type: 3}
   time: 0
   timeMeterImg: {fileID: 1081221945}
