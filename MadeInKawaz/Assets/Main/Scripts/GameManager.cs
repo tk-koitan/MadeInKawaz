@@ -7,7 +7,6 @@ using DG.Tweening;
 using UnityEngine.SceneManagement;
 using System.Linq;
 using UnityEngine.UI;
-using UnityEngine.Advertisements;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -139,7 +138,7 @@ public class GameManager : MonoBehaviour
         //DebugTextManager.Display(() => "gameType:" + currentGameType.ToString() + "\n");
         //DebugTextManager.Display(() => "Loading:" + (async.progress * 100).ToString("D3") + "%\n");
         //DebugTextManager.Display(() => "Aspect:" + managerCamera.aspect + "\n");
-        DebugTextManager.Display(() => "AdsIsReady:" + Advertisement.IsReady() + "\n");
+        //DebugTextManager.Display(() => "AdsIsReady:" + Advertisement.IsReady() + "\n");
         //managerCammera.DOAspect(1, 5);
         //managerCammera.aspect = 16f / 9f;
         //カメラをアス比に合わせる設定
@@ -715,12 +714,15 @@ public class GameManager : MonoBehaviour
     */
 
     //広告
+    //9/9無効化
     public void ShowAd()
     {
+        /*
         if (Advertisement.IsReady())
         {
             Advertisement.Show();
         }
+        */
     }
 
     public enum PlayMode
