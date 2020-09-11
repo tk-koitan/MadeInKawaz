@@ -15,7 +15,7 @@ public class MouseScript : MonoBehaviour
     [SerializeField]
     private Transform cat;
     //private AudioSource audioSource;
-    
+
     void Start()
     {
         //audioSource = GetComponent<AudioSource>();
@@ -23,17 +23,16 @@ public class MouseScript : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !isFinished)
-        {
-            transform.position += new Vector3(-2, 0, 0);
-            spriteVersion++;
-            if (spriteVersion > 3)
-                spriteVersion = 0;
-            youSprite.sprite = sprites[spriteVersion];
-            //audioSource.Play();
-        }
         if (!isFinished)
         {
+            //複数のタッチに対応する
+            foreach (Touch touch in Input.touches)
+            {
+                if (touch.phase == TouchPhase.Began)
+                {
+                    Move();
+                }
+            }
             if (transform.position.x < -6 || cat.position.x < -4)
             {
                 transform.parent = cat;
@@ -51,5 +50,14 @@ public class MouseScript : MonoBehaviour
                 isWin = false;
             }
         }
+    }
+
+    void Move()
+    {
+        transform.position += new Vector3(-2, 0, 0);
+        spriteVersion++;
+        if (spriteVersion > 3)
+            spriteVersion = 0;
+        youSprite.sprite = sprites[spriteVersion];
     }
 }
