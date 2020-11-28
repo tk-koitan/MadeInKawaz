@@ -18,7 +18,7 @@ public class Ball : MonoBehaviour
     void Start()
     {
         mRigidbody2D = GetComponent<Rigidbody2D>();
-        mBallRadius = GetComponent<CircleCollider2D>().radius;
+        mBallRadius = GetComponent<CircleCollider2D>().radius * transform.localScale.x;
     }
 
     // Update is called once per frame
@@ -46,9 +46,23 @@ public class Ball : MonoBehaviour
         }
 
         mRigidbody2D.velocity += new Vector2(100f *  vel * Time.deltaTime, 0f);
-        transform.rotation = Quaternion.Euler(0f, 0f, Mathf.Rad2Deg * -transform.position.x / mBallRadius);
 
-        
+        if (-11f + mBallRadius > transform.position.x)
+        {
+            Vector3 vec = transform.position;
+            vec.x = -11f + mBallRadius;
+            transform.position = vec;
+            mRigidbody2D.velocity = Vector2.zero;
+        }
+        else if (11f - mBallRadius < transform.position.x)
+        {
+            Vector3 vec = transform.position;
+            vec.x = 11f - mBallRadius;
+            transform.position = vec;
+            mRigidbody2D.velocity = Vector2.zero;
+        }
+
+        transform.rotation = Quaternion.Euler(0f, 0f, Mathf.Rad2Deg * -transform.position.x / mBallRadius);
     }
 
     float SignOrZero(float a)
