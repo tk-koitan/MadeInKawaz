@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdb1034ebb819460397b1bf6f8150383, type: 3}
+  m_Name: BallRide
+  m_EditorClassIdentifier: 
+  sceneName: BallRide
+  titleName: "\u306D\u3053\u307E\u308F\u3057"
+  authorName: Zakky
+  developerName: "\u304B\u308F\u305A\u5B66\u751F\u90E8"
+  statement: "\u30D0\u30E9\u30F3\u30B9\u3092\u3068\u308C\uFF01"
+  explanation: "\u306B\u3083\u3002\u306B\u3083\u306B\u3083\u306B\u3083\u30FC\u306B\u3083\u3063\uFF01\u306B\u3083\u306B\u3083\u3093\uFF01\uFF01\n(\u611A\u304B\u306A\u4EBA\u985E\u3088\u3001\u6211\u3092\u3046\u307E\u304F\u3066\u306A\u3065\u3051\u3089\u308C\u308B\u304B\u306A\uFF1F)"
+  gameType: 0
+  iconImage: {fileID: 21300000, guid: e2cca1d4971fbb94383e1b18e9b34e0d, type: 3}
+  screenshotImage: {fileID: 21300000, guid: dd3c4b7d60f56814db909d84524c480f, type: 3}

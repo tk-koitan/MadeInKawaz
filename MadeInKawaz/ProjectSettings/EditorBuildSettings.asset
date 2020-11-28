@@ -50,4 +50,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Koitan/EndlessPaperCup/Scenes/EndlessPaperCup.unity
     guid: af42703da5d5949a79e441e97b0d0575
+  - enabled: 1
+    path: Assets/Zakky/BallRide/Scenes/BallRide.unity
+    guid: 66f1effb2706f3146b16a0af5a652560
   m_configObjects: {}
