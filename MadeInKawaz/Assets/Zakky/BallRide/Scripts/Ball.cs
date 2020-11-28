@@ -47,14 +47,14 @@ public class Ball : MonoBehaviour
 
         mRigidbody2D.velocity += new Vector2(100f *  vel * Time.deltaTime, 0f);
 
-        if (-11f + mBallRadius > transform.position.x)
+        if (-11f + mBallRadius > transform.position.x && mRigidbody2D.velocity.x < 0f)
         {
             Vector3 vec = transform.position;
             vec.x = -11f + mBallRadius;
             transform.position = vec;
             mRigidbody2D.velocity = Vector2.zero;
         }
-        else if (11f - mBallRadius < transform.position.x)
+        else if (11f - mBallRadius < transform.position.x && mRigidbody2D.velocity.x > 0f)
         {
             Vector3 vec = transform.position;
             vec.x = 11f - mBallRadius;
