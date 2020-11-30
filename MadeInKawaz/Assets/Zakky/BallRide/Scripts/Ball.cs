@@ -24,13 +24,34 @@ public class Ball : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        BallMove();
+    }
+
+    void BallMove() 
+    {
+        AddVelocity();
+
+        ScreenClamp();
+
+        BallRotation();
+    }
+
+    void AddVelocity()
+    {
+        mRigidbody2D.velocity += new Vector2(100f * xInput() * Time.deltaTime, 0f);
+    }
+
+    //返り値は-1, 0, 1のいずれか
+    float xInput()
+    {
+        float vel = SignOrZero(Input.GetAxis("Horizontal"));
+
         Vector3 touchScreenPosition = Input.mousePosition;
 
         // 10.0fに深い意味は無い。画面に表示したいので適当な値を入れてカメラから離そうとしているだけ.
         touchScreenPosition.z = 10.0f;
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(touchScreenPosition);
 
-        float vel = SignOrZero(Input.GetAxis("Horizontal"));
         if (Input.GetMouseButtonDown(0))
         {
             oldPos = mousePos;
@@ -38,15 +59,15 @@ public class Ball : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
-            //transform.Translate(new Vector3(mousePos.x - oldPos.x, 0f, 0f));
             vel = SignOrZero(mousePos.x - oldPos.x);
-            //画面外に出ないように
-            //transform.position = new Vector3(Mathf.Clamp(transform.position.x, -width, width), Mathf.Clamp(transform.position.y, -height, height));
             oldPos = mousePos;
         }
 
-        mRigidbody2D.velocity += new Vector2(100f *  vel * Time.deltaTime, 0f);
+        return vel;
+    }
 
+    void ScreenClamp()
+    {
         if (-11f + mBallRadius > transform.position.x && mRigidbody2D.velocity.x < 0f)
         {
             Vector3 vec = transform.position;
@@ -61,7 +82,10 @@ public class Ball : MonoBehaviour
             transform.position = vec;
             mRigidbody2D.velocity = Vector2.zero;
         }
+    }
 
+    void BallRotation()
+    {
         transform.rotation = Quaternion.Euler(0f, 0f, Mathf.Rad2Deg * -transform.position.x / mBallRadius);
     }
 
