@@ -5,15 +5,20 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     Rigidbody2D mRigidbody2D;
-    float mBallRadius;
+    public float mBallRadius
+    {
+        get;
+        private set;
+    }
 
-    // マウスの一フレーム前の座標
+    // マウスの一フレーム前の座標(クラスにして勝手に取ってほしい？)
     Vector3 oldPos;
 
     void Awake()
     {
         transform.position = new Vector3(Random.Range(-1f, 1f), -1f, 0f);
     }
+
     // Start is called before the first frame update
     void Start()
     {

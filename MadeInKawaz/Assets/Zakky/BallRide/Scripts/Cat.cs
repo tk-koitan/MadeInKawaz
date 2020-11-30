@@ -8,10 +8,9 @@ public class Cat : MonoBehaviour
     Ball mBall;
     Rigidbody2D mRigidbody2D;
 
-    float mBallRadius;
     float mCatRadius;
 
-    ZakkyLib.Timer mTimer;
+    ZakkyLib.Timer mClearTimer;
     
     // Start is called before the first frame update
     void Start()
@@ -20,13 +19,12 @@ public class Cat : MonoBehaviour
 
         IniPos();
 
-        mTimer = new ZakkyLib.Timer(3.8f);
+        mClearTimer = new ZakkyLib.Timer(3.8f);
     }
 
     void ComponentSetter()
     {
-        //ボールと猫の半径求める
-        mBallRadius = mBall.GetComponent<CircleCollider2D>().radius * mBall.transform.localScale.x;
+        //猫の半径求める
         mCatRadius = GetComponent<CircleCollider2D>().radius * transform.localScale.x;
         mRigidbody2D = GetComponent<Rigidbody2D>();
     }
@@ -34,8 +32,7 @@ public class Cat : MonoBehaviour
     void IniPos()
     {
         transform.position = new Vector3(
-            Random.Range(0, 2) == 0 ? Random.Range(-0.2f, -0.1f) : Random.Range(0.1f, 0.2f)
-            + mBall.transform.position.x,
+            Random.Range(0, 2) == 0 ? Random.Range(-0.2f, -0.1f) : Random.Range(0.1f, 0.2f) + mBall.transform.position.x,
             mBall.transform.position.y + 5f,
             0f
             );
@@ -80,13 +77,13 @@ public class Cat : MonoBehaviour
 
     bool IsCatFlying()
     {
-        return Vec3FromBallToCat().magnitude > mBallRadius + mCatRadius;
+        return Vec3FromBallToCat().magnitude > mBall.mBallRadius + mCatRadius;
     }
 
     void CatClamp()
     {
         //移動
-        transform.position = Vec3FromBallToCat().normalized * (mBallRadius + mCatRadius)
+        transform.position = Vec3FromBallToCat().normalized * (mBall.mBallRadius + mCatRadius)
                 + mBall.transform.position;
 
         //ボールから外側への速度を内積とって計算して0にする
@@ -97,12 +94,14 @@ public class Cat : MonoBehaviour
     void CatRotation()
     {
         //猫をボールに合わせて回転
-        transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, Mathf.Rad2Deg * Mathf.Atan2(Vec3FromBallToCat().y, Vec3FromBallToCat().x) - 90f));
+        transform.rotation = Quaternion.Euler(
+            new Vector3(0f, 0f, Mathf.Rad2Deg * Mathf.Atan2(Vec3FromBallToCat().y, Vec3FromBallToCat().x) - 90f)
+            );
     }
 
     void ClearCheck()
     {
         //とりあえずクリア書いた
-        if (mTimer.IsTimeout() && transform.position.y > -3.5f) GameManager.Clear();
+        if (mClearTimer.IsTimeout() && transform.position.y > -3.5f) GameManager.Clear();
     }
 }
