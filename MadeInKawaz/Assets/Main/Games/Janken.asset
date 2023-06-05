@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fdb1034ebb819460397b1bf6f8150383, type: 3}
-  m_Name: meiteiFox
+  m_Name: Janken
   m_EditorClassIdentifier: 
-  sceneName: nure
-  titleName: 
-  authorName: 
-  developerName: 
-  statement: "\u306C\u308C\uFF01"
+  sceneName: Janken
+  titleName: Janken
+  authorName: Yuna
+  developerName: Gamma
+  statement: "\u8CA0\u3051\u308D\uFF01"
   explanation: 
   gameType: 0
-  iconImage: {fileID: 0}
-  screenshotImage: {fileID: 0}
+  iconImage: {fileID: 21300000, guid: 8db6cc07b45a0a2429fe507b24a32c59, type: 3}
+  screenshotImage: {fileID: 21300000, guid: 7d9d6ec04de75e24a84af59047fd0f0e, type: 3}

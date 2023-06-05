@@ -53,10 +53,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Zakky/BallRide/Scenes/BallRide.unity
     guid: 66f1effb2706f3146b16a0af5a652560
-  - enabled: 1
+  - enabled: 0
     path: Assets/meiteiFox/Scene/nure.unity
     guid: 3a4977d78148cbc4ea0e94ff2e1da0ed
   - enabled: 1
     path: Assets/y_y/Scene/y_y.unity
     guid: 537852f677297b14f88c1ef706ea79c9
+  - enabled: 1
+    path: Assets/Yuna/Scenes/Janken.unity
+    guid: 7a8f4f7cfe6d51a418b35f2d602b146d
   m_configObjects: {}

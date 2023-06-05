@@ -26,12 +26,28 @@ public class MouseScript : MonoBehaviour
         if (!isFinished)
         {
             //複数のタッチに対応する
+
+            /*
             foreach (Touch touch in Input.touches)
             {
                 if (touch.phase == TouchPhase.Began)
                 {
                     Move();
                 }
+            }
+            if (transform.position.x < -6 || cat.position.x < -4)
+            {
+                transform.parent = cat;
+                isFinished = true;
+                if (transform.position.x < -6)
+                    isWin = true;
+            }
+            */
+
+            //上が恐らくスマホ用なのでPC用に記載(y_y,20230601)
+            if (Input.GetMouseButtonDown(0))
+            {
+                Move();
             }
             if (transform.position.x < -6 || cat.position.x < -4)
             {
