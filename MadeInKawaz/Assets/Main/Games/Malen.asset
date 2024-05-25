@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdb1034ebb819460397b1bf6f8150383, type: 3}
+  m_Name: Malen
+  m_EditorClassIdentifier: 
+  sceneName: Malen
+  titleName: "\u3053\u3063\u3061\u898B\u3066\uFF01"
+  authorName: "\u307E\u30FC\u308C\u3093"
+  developerName: Gamma
+  statement: "\u3055\u304C\u305B\uFF01"
+  explanation: "\u81EA\u5DF1\u4E3B\u5F35\u304C\u6FC0\u3057\u3044\u5B50\u306B\u6CE8\u76EE\u3057\u3066\u3042\u3052\u3088\u3046"
+  gameType: 0
+  iconImage: {fileID: 21300000, guid: 85b0355bc4dccf441a555f97132ef4f1, type: 3}
+  screenshotImage: {fileID: 21300000, guid: 3bf0292ce8af0064ebb9b52cb8db0ff0, type: 3}
