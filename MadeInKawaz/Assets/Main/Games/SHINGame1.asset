@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdb1034ebb819460397b1bf6f8150383, type: 3}
+  m_Name: SHINGame1
+  m_EditorClassIdentifier: 
+  sceneName: SHINGame1
+  titleName: "\u6559\u5BA4\u3067\u306E\u821E\u8E0F\u4F1A"
+  authorName: SHIN
+  developerName: SHIN
+  statement: "\u9759\u304B\u306B\u3055\u305B\u308D\uFF01"
+  explanation: "\u3042\u306A\u305F\u306F\u6559\u5BA4\u306E\u5148\u751F\u3001\n\u6642\u9593\u5185\u306B\u751F\u5F92\u305F\u3061\u3092\u9759\u304B\u306B\u3055\u305B\u308D\uFF01"
+  gameType: 0
+  iconImage: {fileID: -1451985043, guid: d0109458b8429409c98bdab844733440, type: 3}
+  screenshotImage: {fileID: 21300000, guid: 6af4ee79716d94918bcdae5bfad76e01, type: 3}

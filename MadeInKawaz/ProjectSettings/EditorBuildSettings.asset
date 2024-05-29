@@ -62,4 +62,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Yuna/Scenes/Janken.unity
     guid: 7a8f4f7cfe6d51a418b35f2d602b146d
+  - enabled: 1
+    path: Assets/SHIN/Scenes/SHINGame1.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Malen/Scene/Malen.unity
+    guid: 5efafc35879f9ac40b197bfba92f40c4
   m_configObjects: {}
