@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdb1034ebb819460397b1bf6f8150383, type: 3}
+  m_Name: Nakata
+  m_EditorClassIdentifier: 
+  sceneName: Tuna cut
+  titleName: "\u30DE\u30B0\u30ED\u5207\u308A"
+  authorName: Nakata
+  developerName: Nakata
+  statement: "\u30EA\u30BA\u30E0\u306B\u5408\u308F\u305B\u3066\u30DE\u30B0\u30ED\u3092\u5207\u308C\uFF01"
+  explanation: 
+  gameType: 0
+  iconImage: {fileID: 21300000, guid: 888c06c36389bf84f9668a81072f0949, type: 3}
+  screenshotImage: {fileID: 21300000, guid: 41e47d4a2acd2d1468d0037b780be43c, type: 3}
