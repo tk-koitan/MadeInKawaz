@@ -597,6 +597,7 @@ public class GameManager : MonoBehaviour
         }
 
         sceneName = package.sceneName;
+        statementMesh.enableAutoSizing = true;
         statementMesh.text = package.statement;
         currentGameType = package.gameType;
 
