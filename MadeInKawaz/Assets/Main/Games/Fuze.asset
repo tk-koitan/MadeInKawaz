@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdb1034ebb819460397b1bf6f8150383, type: 3}
+  m_Name: Fuze
+  m_EditorClassIdentifier: 
+  sceneName: Straw
+  titleName: "\u30B3\u30FC\u30D2\u30FC\u725B\u4E73"
+  authorName: Fuze
+  developerName: Kawaz
+  statement: "\u3055\u305B\uFF01\uFF01"
+  explanation: "\u753B\u9762\u3092\u30BF\u30C3\u30D7\u3067\u7D19\u30D1\u30C3\u30AF\u306E\u56DE\u8EE2\u304C\u6B62\u307E\u308A\u3001\u30B9\u30C8\u30ED\u30FC\u306E\u3055\u3057\u53E3\u306E\u767D\u3044\u90E8\u5206\u306B\u3055\u305B\u305F\u3089\u30AF\u30EA\u30A2"
+  gameType: 0
+  iconImage: {fileID: 21300000, guid: 9566ca9efe251d8408e0d4fc6c298911, type: 3}
+  screenshotImage: {fileID: 21300000, guid: 22f35dd5da94d7c4f93b78a27654623a, type: 3}

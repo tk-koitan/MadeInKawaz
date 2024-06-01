@@ -71,4 +71,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Nakata/Tuna cut.unity
     guid: e8866cbbcaa370a40a66ecdca7c17ebf
+  - enabled: 1
+    path: Assets/Fuze/Straw.unity
+    guid: 3335013a6a86c9048a6d57dbe5d06a63
   m_configObjects: {}
