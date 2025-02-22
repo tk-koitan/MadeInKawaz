@@ -55,7 +55,7 @@ namespace TadaGame2
             float goal_y = transform.position.y + GetComponent<CircleCollider2D>().offset.y * transform.localScale.y;
 
             // 下向きの速度があり，かつゴールの上から入ったらクリア
-            if (collision.GetComponent<Rigidbody2D>().velocity.y < 0f && goal_y < collision.transform.position.y)
+            if (collision.GetComponent<Rigidbody2D>().linearVelocity.y < 0f && goal_y < collision.transform.position.y)
             {
                 GameManager.Clear();
                 finish_obj_.transform.position = finish_move_pos_;

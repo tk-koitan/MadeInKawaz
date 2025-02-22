@@ -87,8 +87,8 @@ public class Cat : MonoBehaviour
                 + mBall.transform.position;
 
         //ボールから外側への速度を内積とって計算して0にする
-        Vector2 vec = Vec3FromBallToCat().normalized * Vector2.Dot(Vec3FromBallToCat().normalized, mRigidbody2D.velocity);
-        mRigidbody2D.velocity -= vec;
+        Vector2 vec = Vec3FromBallToCat().normalized * Vector2.Dot(Vec3FromBallToCat().normalized, mRigidbody2D.linearVelocity);
+        mRigidbody2D.linearVelocity -= vec;
     }
 
     void CatRotation()

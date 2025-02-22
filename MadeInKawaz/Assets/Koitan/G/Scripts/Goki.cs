@@ -55,7 +55,7 @@ namespace g
                     //Vector3 dir = Quaternion.AngleAxis(Random.Range(-90f, 90f), Vector3.up) * Vector3.up * power;
                     animator.speed = 0;
                     rb.gravityScale = gravity;
-                    rb.velocity = new Vector2(Random.Range(-5, 5), 10);
+                    rb.linearVelocity = new Vector2(Random.Range(-5, 5), 10);
                     //transform.DOMove(dir, 0.5f).SetRelative().SetEase(Ease.OutSine);
                     GameManager.Clear();
                 }
