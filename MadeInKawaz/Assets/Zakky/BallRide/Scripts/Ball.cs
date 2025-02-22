@@ -43,7 +43,7 @@ public class Ball : MonoBehaviour
 
     void AddVelocity()
     {
-        mRigidbody2D.velocity += new Vector2(100f * xInput() * Time.deltaTime, 0f);
+        mRigidbody2D.linearVelocity += new Vector2(100f * xInput() * Time.deltaTime, 0f);
     }
 
     //返り値は-1, 0, 1のいずれか
@@ -73,19 +73,19 @@ public class Ball : MonoBehaviour
 
     void ScreenClamp()
     {
-        if (-11f + mBallRadius > transform.position.x && mRigidbody2D.velocity.x < 0f)
+        if (-11f + mBallRadius > transform.position.x && mRigidbody2D.linearVelocity.x < 0f)
         {
             Vector3 vec = transform.position;
             vec.x = -11f + mBallRadius;
             transform.position = vec;
-            mRigidbody2D.velocity = Vector2.zero;
+            mRigidbody2D.linearVelocity = Vector2.zero;
         }
-        else if (11f - mBallRadius < transform.position.x && mRigidbody2D.velocity.x > 0f)
+        else if (11f - mBallRadius < transform.position.x && mRigidbody2D.linearVelocity.x > 0f)
         {
             Vector3 vec = transform.position;
             vec.x = 11f - mBallRadius;
             transform.position = vec;
-            mRigidbody2D.velocity = Vector2.zero;
+            mRigidbody2D.linearVelocity = Vector2.zero;
         }
     }
 

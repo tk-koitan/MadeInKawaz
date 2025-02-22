@@ -50,7 +50,7 @@ public class SpriteMove : MonoBehaviour
             this.transform.DOScale(1, 0.1f);
             this.transform.DORotate(new Vector3(0, 0, 0), 0.1f);
             rigidbody2D.isKinematic = true;
-            rigidbody2D.velocity = Vector3.zero;
+            rigidbody2D.linearVelocity = Vector3.zero;
             stopDancing = true;
             animator.enabled = false;
 

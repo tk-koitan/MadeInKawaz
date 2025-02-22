@@ -158,7 +158,7 @@ namespace TMPro.Examples
                     // We do this to make sure this character is rendered last and over other characters.
                     meshInfo.SwapVertexData(vertexIndex, lastVertexIndex);
 
-                    // Need to update the appropriate 
+                    // Need to update the appropriate
                     m_TextMeshPro.UpdateVertexData(TMP_VertexDataUpdateFlags.All);
                 }
                 #endregion
@@ -258,7 +258,6 @@ namespace TMPro.Examples
                     // Debug.Log("Link ID: \"" + linkInfo.GetLinkID() + "\"   Link Text: \"" + linkInfo.GetLinkText() + "\""); // Example of how to retrieve the Link ID and Link Text.
 
                     Vector3 worldPointInRectangle;
-
                     RectTransformUtility.ScreenPointToWorldPointInRectangle(m_TextMeshPro.rectTransform, Input.mousePosition, m_Camera, out worldPointInRectangle);
 
                     switch (linkInfo.GetLinkID())
@@ -287,7 +286,7 @@ namespace TMPro.Examples
                     m_lastIndex = -1;
                 }
             }
-            
+
         }
 
 
@@ -492,8 +491,8 @@ namespace TMPro.Examples
 
             // Restore UV0S
             // UVS0
-            Vector2[] src_uv0s = m_cachedMeshInfoVertexData[materialIndex].uvs0;
-            Vector2[] dst_uv0s = m_TextMeshPro.textInfo.meshInfo[materialIndex].uvs0;
+            Vector4[] src_uv0s = m_cachedMeshInfoVertexData[materialIndex].uvs0;
+            Vector4[] dst_uv0s = m_TextMeshPro.textInfo.meshInfo[materialIndex].uvs0;
             dst_uv0s[vertexIndex + 0] = src_uv0s[vertexIndex + 0];
             dst_uv0s[vertexIndex + 1] = src_uv0s[vertexIndex + 1];
             dst_uv0s[vertexIndex + 2] = src_uv0s[vertexIndex + 2];
@@ -541,7 +540,7 @@ namespace TMPro.Examples
             dst_uv2s[lastIndex + 2] = src_uv2s[lastIndex + 2];
             dst_uv2s[lastIndex + 3] = src_uv2s[lastIndex + 3];
 
-            // Need to update the appropriate 
+            // Need to update the appropriate
             m_TextMeshPro.UpdateVertexData(TMP_VertexDataUpdateFlags.All);
         }
     }

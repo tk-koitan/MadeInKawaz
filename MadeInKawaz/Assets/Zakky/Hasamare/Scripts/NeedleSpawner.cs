@@ -16,13 +16,13 @@ public class NeedleSpawner : MonoBehaviour
             {
                 sum++;
                 GameObject obj = Instantiate(Needle, new Vector2(-10f, 3f * (1.5f - 1 * i)), Quaternion.identity);
-                obj.GetComponent<Rigidbody2D>().velocity = new Vector2(5f / 2, 0);
+                obj.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(5f / 2, 0);
             }
             else
             {
                 sum--;
                 GameObject obj = Instantiate(Needle, new Vector2(10f, 3 * (1.5f - 1 * i)), Quaternion.identity);
-                obj.GetComponent<Rigidbody2D>().velocity = new Vector2(-5f / 2, 0);
+                obj.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(-5f / 2, 0);
             }
         }
     }

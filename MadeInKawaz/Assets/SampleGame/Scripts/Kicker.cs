@@ -54,7 +54,7 @@ namespace SampleGame
                 if((mousePos-fromPos).magnitude > 1)
                 {
                     isKicked = true;
-                    ball.velocity = (mousePos - fromPos).normalized * speed;
+                    ball.linearVelocity = (mousePos - fromPos).normalized * speed;
                     audioSource.Play();
                     gestureHand.SetActive(false);
                 }

@@ -43,7 +43,7 @@ namespace Hitode
 
         private void FixedUpdate()
         {
-            rb.velocity = speed * dir;
+            rb.linearVelocity = speed * dir;
         }
 
         public void Catch()
