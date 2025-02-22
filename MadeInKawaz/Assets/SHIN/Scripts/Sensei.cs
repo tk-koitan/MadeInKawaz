@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.U2D;
+//using UnityEditor.U2D; (removed because of build error By y_y: 2025_02_22
 using UnityEngine;
 
 public class Sensei : MonoBehaviour
