@@ -2,7 +2,7 @@
 これは、Kawaz学生部が新歓用に制作したフレームワーク、及びそれを使用したゲームです。
 
 ## Requirements
-- Unity 2019.2.8f1
+- Unity 6000.039f1
 
 ## ミニゲームの仕様
 - スマホでも遊べることを考慮して、入力はタッチ操作のみ
@@ -55,7 +55,7 @@ if(成功条件)
 Contributions, issues and feature requests are welcome.
 
 ## Author
-- Twitter: [@kawaz_student](https://twitter.com/kawaz_student), [@Jg2Bl](https://twitter.com/Jg2Bl)
+- Twitter: ~~[@kawaz_student](https://twitter.com/kawaz_student)~~, [@gamma_game_com](https://x.com/gamma_game_com),[@Jg2Bl](https://twitter.com/Jg2Bl)
 - Github: [tk-koitan](https://github.com/tk-koitan)
 
 ## Show your support
