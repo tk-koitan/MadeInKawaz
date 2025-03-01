@@ -15,29 +15,30 @@ public class DebugTextManager : MonoBehaviour
     void Start()
     {
         debugText.text = string.Empty;
+        debugCanvas.SetActive(Debug.isDebugBuild);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q) || (Input.touchCount == 4 && Input.touches[3].phase == TouchPhase.Began))
-        {
-            debugCanvas.SetActive(!debugCanvas.activeSelf);
-        }
-
-        if (Input.GetKey(KeyCode.W))
-        {
-            debugText.fontSize += 1;
-        }
-
-        if (Input.GetKey(KeyCode.S))
-        {
-            debugText.fontSize -= 1;
-        }
-
         //debugText.text = str();
         if (Debug.isDebugBuild)
         {
+            if (Input.GetKeyDown(KeyCode.Q) || (Input.touchCount == 4 && Input.touches[3].phase == TouchPhase.Began))
+            {
+                debugCanvas.SetActive(!debugCanvas.activeSelf);
+            }
+
+            if (Input.GetKey(KeyCode.W))
+            {
+                debugText.fontSize += 1;
+            }
+
+            if (Input.GetKey(KeyCode.S))
+            {
+                debugText.fontSize -= 1;
+            }
+
             debugText.text = string.Empty;
             for (int i = debugElements.Count - 1; i >= 0; i--)
             {
