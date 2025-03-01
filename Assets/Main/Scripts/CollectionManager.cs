@@ -29,22 +29,17 @@ public class CollectionManager : MonoBehaviour
     private float width, height;
     [SerializeField]
     private int widthCount;
+    List<GameObject> buttonList = new List<GameObject>();
+    [SerializeField]
+    Button leftArrowButton, rightArrowButton;
+    int currentIndexOffset = 0;
     // Start is called before the first frame update
     void Start()
     {
-        app.SetActive(false);
-        //button.onClick.AddListener(() => AppIn(button.gameObject));
-        for (int i = 0; i < gamePackageSet.games.Length; i++)
-        {
-            GamePackage g = gamePackageSet.games[i];
-            GameObject obj = Instantiate(appButton, canvas.transform);
-            Button b = obj.GetComponent<Button>();
-            Image im = obj.transform.GetChild(0).GetComponent<Image>();//プレハブの構造が変わると危険！
-            obj.transform.localPosition = upperRightPos + new Vector3(width * (i % widthCount), -height * (i / widthCount));
-            b.onClick.AddListener(() => AppIn(obj.transform.position, g));
-            im.sprite = g.iconImage;
-        }
-        app.transform.SetAsLastSibling();
+        GenerateButtons();
+        leftArrowButton.onClick.AddListener(OnLeftArrowButton);
+        rightArrowButton.onClick.AddListener(OnRightArrowButton);
+        UpdateArrowButtons();
     }
 
     // Update is called once per frame
@@ -94,5 +89,67 @@ public class CollectionManager : MonoBehaviour
         //GameManager.TrasitionScene("Library", "Title");
         SceneManager.LoadSceneAsync("Title", LoadSceneMode.Additive);
         SceneManager.UnloadSceneAsync("Library");
+    }
+
+    void GenerateButtons()
+    {
+        app.SetActive(false);
+        for (int i = 0; i < 20; i++)
+        {
+            GameObject obj = Instantiate(appButton, canvas.transform);
+            buttonList.Add(obj);
+            obj.transform.localPosition = upperRightPos + new Vector3(width * (i % widthCount), -height * (i / widthCount));
+        }
+        currentIndexOffset = 0;
+        UpdateButtons(currentIndexOffset);
+        app.transform.SetAsLastSibling();
+    }
+
+    void UpdateButton(GameObject obj, GamePackage g)
+    {
+        Button b = obj.GetComponent<Button>();
+        Image im = obj.transform.GetChild(0).GetComponent<Image>();//プレハブの構造が変わると危険！
+        b.onClick.RemoveAllListeners();
+        b.onClick.AddListener(() => AppIn(obj.transform.position, g));
+        im.sprite = g.iconImage;
+    }
+
+    void UpdateButtons(int indexOffset)
+    {
+        for (int i = 0; i < 20; i++)
+        {
+            var obj = buttonList[i];
+            int index = i + indexOffset;
+            if (index < gamePackageSet.games.Length)
+            {
+                GamePackage g = gamePackageSet.games[index];
+                UpdateButton(obj, g);
+                obj.SetActive(true);
+            }
+            else
+            {
+                obj.SetActive(false);
+            }
+        }
+    }
+
+    void OnLeftArrowButton()
+    {
+        currentIndexOffset -= 20;
+        UpdateButtons(currentIndexOffset);
+        UpdateArrowButtons();
+    }
+
+    void OnRightArrowButton()
+    {
+        currentIndexOffset += 20;
+        UpdateButtons(currentIndexOffset);
+        UpdateArrowButtons();
+    }
+
+    void UpdateArrowButtons()
+    {
+        leftArrowButton.interactable = currentIndexOffset > 0;
+        rightArrowButton.interactable = currentIndexOffset + 20 < gamePackageSet.games.Length;
     }
 }
